@@ -40,9 +40,42 @@
     master.gain.linearRampToValueAtTime(target, now + duration);
   }
 
+  // ---------- ReverbBus ----------
+  // IR procedurale: rumore bianco stereo decorrelato × exp decay.
+  // 40 KB circa in RAM (3s × 2ch × 44.1kHz × 4byte). OK ovunque.
+  let reverbSend = null;
+  let reverbOut = null;
+
+  function buildImpulseResponse(durationSec, decay) {
+    const len = Math.floor(AC.sampleRate * durationSec);
+    const ir = AC.createBuffer(2, len, AC.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const data = ir.getChannelData(ch);
+      for (let i = 0; i < len; i++) {
+        const t = i / len;
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, decay);
+      }
+    }
+    return ir;
+  }
+
+  function buildReverbBus() {
+    const convolver = AC.createConvolver();
+    convolver.buffer = buildImpulseResponse(3.0, 2.2);
+
+    reverbSend = AC.createGain();
+    reverbSend.gain.value = 1.0;   // i send esterni useranno il proprio gain
+
+    reverbOut = AC.createGain();
+    reverbOut.gain.value = 0.7;    // wet level globale
+
+    reverbSend.connect(convolver).connect(reverbOut).connect(master);
+  }
+
   function buildGraphOnce() {
     if (started) return;
-    // I layer verranno costruiti nei task successivi.
+    buildReverbBus();
+    // altri layer nei task successivi
     started = true;
   }
 
