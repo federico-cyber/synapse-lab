@@ -1,5 +1,7 @@
 /* Custom cursor — small dot + ring, magnet on [data-magnet] elements */
 (function () {
+  if (window.matchMedia('(hover: none)').matches) return;
+
   const cursor = document.getElementById('cursor');
   if (!cursor) return;
 
