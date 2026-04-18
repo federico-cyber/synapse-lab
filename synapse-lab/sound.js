@@ -13,6 +13,7 @@
   // ---------- Stato globale del modulo ----------
   let AC = null;           // AudioContext
   let master = null;       // masterGain → destination
+  let reverbSend = null;   // bus input per mood/arpeggio/accenti, popolato da buildReverbBus()
   let running = false;     // audio attualmente udibile
   let started = false;     // nodi costruiti almeno una volta
 
@@ -229,7 +230,6 @@
   // ---------- ReverbBus ----------
   // IR procedurale: rumore bianco stereo decorrelato × exp decay.
   // 40 KB circa in RAM (3s × 2ch × 44.1kHz × 4byte). OK ovunque.
-  let reverbSend = null;
 
   function buildImpulseResponse(durationSec, decay) {
     const len = Math.floor(AC.sampleRate * durationSec);
