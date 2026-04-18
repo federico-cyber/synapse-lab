@@ -8,6 +8,7 @@ import './tweaks-bootstrap.js';
 import './vanilla/cursor.js';
 import './vanilla/neural.js';
 import './vanilla/lang.js';
+import './vanilla/menu.js';
 
 // sound.js: lazy-load — caricato al primo click del toggle (src/app.jsx).
 // Prefetch opportunistico su idle per minimizzare latenza del primo click.

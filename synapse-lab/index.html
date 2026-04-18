@@ -127,6 +127,9 @@
       <span class="logo-text">Synapse <em>Lab</em></span>
     </a>
     <div class="nav-right">
+      <button class="hamburger" id="hamburger-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="menu-overlay">
+        <span></span><span></span><span></span>
+      </button>
       <button class="nav-link" data-magnet data-scroll-to="#ch2" data-it="Manifesto" data-en="Manifesto"></button>
       <button class="nav-link" data-magnet data-scroll-to="#ch3" data-it="Servizi" data-en="Work"></button>
       <button class="nav-link" data-magnet data-scroll-to="#ch6" data-it="Studio" data-en="Studio"></button>
@@ -138,6 +141,22 @@
         <span class="lang-it">IT</span><span class="lang-sep">/</span><span class="lang-en">EN</span>
       </button>
       <button id="cta-top" class="nav-cta" data-magnet data-scroll-to="#ch7" data-it="Inizia un progetto" data-en="Start a project"></button>
+    </div>
+  </nav>
+
+  <!-- Mobile hamburger overlay (visible only ≤ 768px via CSS) -->
+  <nav id="menu-overlay" aria-hidden="true" role="dialog" aria-label="Menu di navigazione">
+    <button class="menu-link" data-scroll-to="#ch2" data-it="Manifesto" data-en="Manifesto"></button>
+    <button class="menu-link" data-scroll-to="#ch3" data-it="Servizi" data-en="Work"></button>
+    <button class="menu-link" data-scroll-to="#ch6" data-it="Studio" data-en="Studio"></button>
+    <button class="menu-link" data-scroll-to="#ch7" data-it="Inizia un progetto" data-en="Start a project"></button>
+    <div class="menu-footer">
+      <button id="menu-sound-toggle" class="nav-icon" type="button">
+        <span class="sound-label">SOUND</span><span class="sound-state">OFF</span>
+      </button>
+      <button id="menu-lang-toggle" class="nav-icon" type="button">
+        <span class="lang-it">IT</span><span class="lang-sep">/</span><span class="lang-en">EN</span>
+      </button>
     </div>
   </nav>
 
