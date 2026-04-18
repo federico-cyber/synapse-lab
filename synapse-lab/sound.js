@@ -359,9 +359,9 @@
   function playShimmer() {
     if (!running || !rateOk()) return;
     const now = AC.currentTime;
-    const baseFreq = 2000 + Math.random() * 1000; // 2-3 kHz
+    const baseFreq = 800 + Math.random() * 400; // 800-1200 Hz, meno pungente
     const detune = (Math.random() * 2 - 1) * 15;  // ±15 cent
-    const gainPeak = 0.04 * velocityFactor();
+    const gainPeak = 0.025 * velocityFactor();
 
     const osc = AC.createOscillator();
     osc.type = 'sine';
@@ -414,7 +414,7 @@
     document.addEventListener('mouseover', (e) => {
       const el = e.target && e.target.closest && e.target.closest('[data-magnet]');
       if (!el) return;
-      if (Math.random() < 0.30) playShimmer();
+      if (Math.random() < 0.15) playShimmer();
     });
     document.addEventListener('click', (e) => {
       const el = e.target && e.target.closest && e.target.closest('a, button, [data-magnet]');
