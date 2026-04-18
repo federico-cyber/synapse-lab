@@ -565,6 +565,7 @@
     stopArpeggiator();
     if (debounceTimer) { clearTimeout(debounceTimer); debounceTimer = null; }
     pendingMood = null;
+    visibilityMuted = false;
     fadeMasterTo(0, FADE_OUT);
   }
 
