@@ -184,6 +184,7 @@ function ChapterServices({ lang, tweaks }) {
 function ChapterProcess({ lang }) {
   const C = COPY.process;
   const [progress, setProgress] = useState(0);
+  const [inView, setInView] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -200,6 +201,22 @@ function ChapterProcess({ lang }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Reveal dei 4 step gestito da React (non dall'IO globale di .reveal):
+  // il re-render di setProgress sovrascriverebbe la className cancellando
+  // la classe .in aggiunta dall'observer, facendo sparire le card.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(entries => {
+      if (entries[0]?.isIntersecting) {
+        setInView(true);
+        io.disconnect();
+      }
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const activeIdx = Math.floor(progress * 4);
 
   return (
@@ -213,7 +230,7 @@ function ChapterProcess({ lang }) {
       </div>
       <div className="spine" style={{ '--progress': `${progress * 100}%` }}>
         {C.steps.map((s, i) => (
-          <div key={i} className={`step reveal ${i <= activeIdx ? 'active' : ''}`}>
+          <div key={i} className={`step reveal${inView ? ' in' : ''}${i <= activeIdx ? ' active' : ''}`}>
             <div className="step-node"/>
             <span className="step-num">N° {s.n}</span>
             <h3 className="step-title">{L(s.title.it, s.title.en)}</h3>
