@@ -310,7 +310,7 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
         <button className="contact-card reveal" data-magnet>
           <div>
             <span className="tag">{L(C.cards[0].tag.it, C.cards[0].tag.en)}</span>
-            <h3 className="title" style={{ marginTop: 16 }} dangerouslySetInnerHTML={rawHtml(L(C.cards[0].title.it, C.cards[0].title.en))}/>
+            <span className="title" role="heading" aria-level="3" style={{ marginTop: 16 }} dangerouslySetInnerHTML={rawHtml(L(C.cards[0].title.it, C.cards[0].title.en))}/>
             <p className="desc" style={{ marginTop: 14 }}>{L(C.cards[0].desc.it, C.cards[0].desc.en)}</p>
           </div>
           <div className="action">
@@ -334,7 +334,7 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
         <button className="contact-card reveal" data-magnet>
           <div>
             <span className="tag">{L(C.cards[2].tag.it, C.cards[2].tag.en)}</span>
-            <h3 className="title" style={{ marginTop: 16 }} dangerouslySetInnerHTML={rawHtml(L(C.cards[2].title.it, C.cards[2].title.en))}/>
+            <span className="title" role="heading" aria-level="3" style={{ marginTop: 16 }} dangerouslySetInnerHTML={rawHtml(L(C.cards[2].title.it, C.cards[2].title.en))}/>
             <p className="desc" style={{ marginTop: 14 }}>{L(C.cards[2].desc.it, C.cards[2].desc.en)}</p>
           </div>
           <div className="action">
