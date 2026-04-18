@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Synapse Lab — Digital craft studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Synapse Lab is a small premium studio crafting web experiences at the edge of design, code, and experimentation.">
+
+<!-- Fonts: Space Grotesk (display) + Instrument Serif (editorial) + JetBrains Mono (lab metadata) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+  // --- TWEAKS (persisted in localStorage) ---
+  const DEFAULT_TWEAKS = {
+    "lang": "it",
+    "theme": "dark",
+    "palette": "blu",
+    "hero": "bold-type",
+    "servicesLayout": "grid-soft",
+    "butterflyDensity": 4,
+    "bubbleDensity": 20,
+    "cursor": "synapse",
+    "grainOn": true,
+    "wireframe": false
+  };
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem('synapse.tweaks') || '{}'); } catch (e) {}
+  window.TWEAKS = Object.assign({}, DEFAULT_TWEAKS, saved);
+  window.__saveTweaks = (t) => {
+    try { localStorage.setItem('synapse.tweaks', JSON.stringify(t)); } catch (e) {}
+  };
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="grain" aria-hidden="true"></div>
+  <canvas id="neural" aria-hidden="true"></canvas>
+
+  <div id="cursor" aria-hidden="true">
+    <div class="c-dot"></div>
+    <div class="c-ring"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav id="nav">
+    <a class="logo" href="#top" data-magnet>
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="26" height="26">
+          <g fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="8" cy="20" r="2.4"/>
+            <circle cx="20" cy="8" r="2.4"/>
+            <circle cx="20" cy="32" r="2.4"/>
+            <circle cx="32" cy="20" r="2.4"/>
+            <circle cx="20" cy="20" r="3.2" class="logo-core"/>
+            <path d="M10 19 Q 14 14 18 10" />
+            <path d="M22 10 Q 26 14 30 19"/>
+            <path d="M30 21 Q 26 26 22 30"/>
+            <path d="M18 30 Q 14 26 10 21"/>
+          </g>
+        </svg>
+      </span>
+      <span class="logo-text">Synapse <em>Lab</em></span>
+    </a>
+    <div class="nav-right">
+      <button class="nav-link" data-magnet data-scroll-to="#ch2" data-it="Manifesto" data-en="Manifesto"></button>
+      <button class="nav-link" data-magnet data-scroll-to="#ch3" data-it="Servizi" data-en="Work"></button>
+      <button class="nav-link" data-magnet data-scroll-to="#ch6" data-it="Studio" data-en="Studio"></button>
+      <div class="nav-divider"></div>
+      <button id="sound-toggle" class="nav-icon" data-magnet title="Sound: off">
+        <span class="sound-label">SOUND</span><span class="sound-state">OFF</span>
+      </button>
+      <button id="lang-toggle" class="nav-icon" data-magnet>
+        <span class="lang-it">IT</span><span class="lang-sep">/</span><span class="lang-en">EN</span>
+      </button>
+      <button id="cta-top" class="nav-cta" data-magnet data-scroll-to="#ch7" data-it="Inizia un progetto" data-en="Start a project"></button>
+    </div>
+  </nav>
+
+  <!-- Chapters mount point -->
+  <main id="main"></main>
+
+  <!-- Side rail: scroll progress + coords -->
+  <aside id="rail" aria-hidden="true">
+    <div class="rail-block">
+      <div class="rail-label">N° <span id="rail-chapter">01</span> / 07</div>
+      <div class="rail-bar"><div class="rail-bar-fill" id="rail-fill"></div></div>
+    </div>
+    <div class="rail-block rail-coords">
+      <div>44.4949° N</div>
+      <div>11.3426° E</div>
+      <div id="rail-clock">— — : — —</div>
+    </div>
+  </aside>
+
+  <!-- Tweaks panel mount -->
+  <div id="tweaks-mount"></div>
+
+  <!-- Wireframe overlay -->
+  <div id="debug-toast" hidden>// debug mode — press <kbd>S Y N</kbd> to exit</div>
+
+  <!-- React + Babel (design prototype uses CDN + Babel standalone) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <!-- Vanilla scripts (run first) -->
+  <script src="neural.js"></script>
+  <script src="cursor.js"></script>
+  <script src="lang.js"></script>
+
+  <!-- React components -->
+  <script type="text/babel" src="copy.jsx"></script>
+  <script type="text/babel" src="chapters.jsx"></script>
+  <script type="text/babel" src="tweaks.jsx"></script>
+  <script type="text/babel" src="mount.jsx"></script>
+</body>
+</html>
