@@ -353,8 +353,8 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
           </div>
           <div className="fl-col">
             <b>{lang === 'en' ? 'Legal' : 'Legale'}</b>
-            <span>VAT IT00000000000</span>
-            <span>{lang === 'en' ? 'Privacy · Cookies' : 'Privacy · Cookie'}</span>
+            <span>{lang === 'en' ? 'VAT — coming soon' : 'P.IVA in attivazione'}</span>
+            <span>{lang === 'en' ? 'Privacy & Cookies — coming soon' : 'Privacy & Cookie in arrivo'}</span>
           </div>
           <div className="fl-col socials" style={{ alignSelf: 'flex-end' }}>
             <a href="https://github.com/federico-cyber" rel="me noopener" target="_blank">GitHub</a>
