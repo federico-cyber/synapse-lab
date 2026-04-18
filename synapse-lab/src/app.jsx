@@ -61,15 +61,19 @@ function App() {
   }, [lang]);
 
   // Sound toggle — drives the ambient soundscape in sound.js
-  // (AudioContext lazily created on first click to satisfy autoplay policy)
+  // (AudioContext lazily created on first click to satisfy autoplay policy;
+  //  sound.js module itself is lazy-loaded here to keep initial bundle lean)
   useEffect(() => {
     const b = document.getElementById('sound-toggle');
     if (!b) return;
-    const toggle = () => {
+    const toggle = async () => {
       const on = document.body.getAttribute('data-sound') === 'on';
       document.body.setAttribute('data-sound', on ? 'off' : 'on');
       const s = b.querySelector('.sound-state');
       if (s) s.textContent = on ? 'OFF' : 'ON';
+      if (!window.__sound) {
+        await import('./vanilla/sound.js');
+      }
       if (window.__sound) {
         if (on) window.__sound.stop();
         else window.__sound.start();
