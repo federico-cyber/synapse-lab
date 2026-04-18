@@ -436,7 +436,7 @@
   const CHAPTER_TO_MOOD = {
     ch1: 'melancholic',
     ch2: 'melancholic',
-    ch3: 'luminous',
+    ch3: 'melancholic',
     ch4: 'luminous',
     ch5: 'luminous',
     ch6: 'melancholic',
