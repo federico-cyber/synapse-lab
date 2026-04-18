@@ -575,7 +575,7 @@
   // Il toggle iniziale è comunque off: questi gate servono a comportamenti
   // secondari come pausa su tab nascosta e rispetto reduced-motion.
 
-  // isMobile(): esporlo tramite __soundDebug per eventuali decisioni future.
+  // isMobile(): helper disponibile per eventuali decisioni future.
   function isMobile() {
     return window.matchMedia && matchMedia('(pointer: coarse)').matches;
   }
@@ -602,6 +602,5 @@
     }
   });
 
-  window.__soundDebug = { moodLayers: () => moodLayers, setMood, isMobile, prefersReducedMotion };
   window.__sound = { start, stop, toggle, isOn };
 })();
