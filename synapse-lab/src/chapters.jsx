@@ -21,9 +21,9 @@ function SplitLine({ children, delay = 0 }) {
 const rawHtml = (s) => ({ __html: s });
 
 /* ------------------- Ch1 — Hero ------------------- */
-function ChapterHero({ lang }) {
+function ChapterHero({ lang, tweaks }) {
   const titleRef = useRef(null);
-  const heroStyle = window.TWEAKS.hero || 'bold-type';
+  const heroStyle = tweaks?.hero || 'bold-type';
   useEffect(() => {
     const el = titleRef.current;
     if (el) setTimeout(() => el.classList.add('in'), 120);
@@ -123,9 +123,9 @@ function ChapterManifesto({ lang }) {
 }
 
 /* ------------------- Ch3 — Services ------------------- */
-function ChapterServices({ lang }) {
+function ChapterServices({ lang, tweaks }) {
   const C = COPY.services;
-  const layout = window.TWEAKS.servicesLayout || 'grid-soft';
+  const layout = tweaks?.servicesLayout || 'grid-soft';
 
   const handleMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect();
