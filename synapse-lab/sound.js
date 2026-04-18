@@ -167,7 +167,7 @@
       probability: 0.65,
       oscType: 'sine',
       adsr: { a: 1.5, d: 0.2, s: 0.7, r: 3.0 },
-      gain: 0.11,
+      gain: 0.07,
       fm: { ratio: 3.5, depth: 60 }, // carattere bell-like
     },
     tense: {
