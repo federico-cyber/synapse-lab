@@ -136,9 +136,43 @@
   const CROSSFADE_S = 3.5;
   let currentMood = null;
 
+  // Whoosh: noise con sweep lowpass, usato come transition stinger.
+  function playWhoosh() {
+    const now = AC.currentTime;
+    const dur = 0.9;
+    const buf = AC.createBuffer(1, Math.floor(AC.sampleRate * dur), AC.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) {
+      const t = i / data.length;
+      // forma d'onda: rumore × envelope campana
+      const env = Math.sin(Math.PI * t);
+      data[i] = (Math.random() * 2 - 1) * env;
+    }
+    const src = AC.createBufferSource();
+    src.buffer = buf;
+
+    const lp = AC.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.setValueAtTime(4000, now);
+    lp.frequency.exponentialRampToValueAtTime(400, now + dur);
+    lp.Q.value = 0.9;
+
+    const dry = AC.createGain();
+    dry.gain.value = 0.015;
+    const wet = AC.createGain();
+    wet.gain.value = 0.135; // 90% bias verso reverb
+
+    src.connect(lp);
+    lp.connect(dry).connect(master);
+    lp.connect(wet).connect(reverbSend);
+    src.start(now);
+    src.stop(now + dur + 0.05);
+  }
+
   function setMood(name) {
     if (!started || !moodLayers[name]) return;
     if (currentMood === name) return;
+    if (currentMood !== null) playWhoosh();
 
     const now = AC.currentTime;
     // fade-out mood uscente
