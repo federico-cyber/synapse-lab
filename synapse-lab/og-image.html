@@ -10,24 +10,32 @@
     background: #0a0a0f;
     color: #fafafa;
     font-family: 'Space Grotesk', sans-serif;
-    padding: 56px 80px;
-    display: flex; flex-direction: column; justify-content: space-between;
     position: relative; overflow: hidden;
   }
   body::before {
     content: ''; position: absolute; inset: 0;
     background: radial-gradient(circle at 80% 20%, rgba(80,140,255,0.25), transparent 50%);
   }
-  .top { display: flex; align-items: center; gap: 14px; position: relative; z-index: 1; }
+  .top {
+    position: absolute; top: 56px; left: 80px; right: 80px;
+    display: flex; align-items: center; gap: 14px; z-index: 1;
+  }
   .mark { width: 44px; height: 44px; }
   .brand { font-weight: 600; letter-spacing: 0.02em; font-size: 20px; }
   .brand em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
   h1 {
+    position: absolute; left: 80px; right: 80px; top: 50%;
+    transform: translateY(-50%);
     font-size: 88px; font-weight: 700; line-height: 1.04; letter-spacing: -0.02em;
-    position: relative; z-index: 1; max-width: 900px;
+    z-index: 1; max-width: 900px;
   }
   h1 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: #8eb8ff; }
-  .bottom { display: flex; justify-content: space-between; align-items: flex-end; position: relative; z-index: 1; font-size: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #a0a0b0; font-weight: 500; }
+  .bottom {
+    position: absolute; bottom: 48px; left: 80px; right: 80px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    z-index: 1; font-size: 16px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #a0a0b0; font-weight: 500;
+  }
 </style>
 </head>
 <body>
