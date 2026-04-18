@@ -40,6 +40,97 @@
     master.gain.linearRampToValueAtTime(target, now + duration);
   }
 
+  // ---------- MoodLayer ----------
+  // Ogni mood ha una sua stanza sonora: oscillatori + filtro + bus.
+  // moodGain parte a 0; lo StateController lo porta a 1 con crossfade.
+  const MOODS_CONFIG = {
+    melancholic: {
+      oscillators: [
+        { type: 'sine',     freq: 110.00, gain: 0.60, detune: -3 }, // A2
+        { type: 'sine',     freq: 164.81, gain: 0.40, detune:  0 }, // E3
+        { type: 'triangle', freq: 220.00, gain: 0.25, detune:  4 }, // A3
+      ],
+      filter: { type: 'lowpass', freq: 600, Q: 0.8, lfoRate: 0.07, lfoDepth: 120 },
+    },
+    luminous: {
+      oscillators: [
+        { type: 'sine',     freq: 523.25, gain: 0.45, detune:  0 }, // C5
+        { type: 'sine',     freq: 659.25, gain: 0.35, detune:  3 }, // E5
+        { type: 'sawtooth', freq: 783.99, gain: 0.15, detune: -5 }, // G5
+      ],
+      filter: { type: 'lowpass', freq: 3000, Q: 0.9, lfoRate: 0.12, lfoDepth: 400 },
+      highpass: { freq: 200 },
+    },
+    tense: {
+      oscillators: [
+        { type: 'sine',     freq:  73.42, gain: 0.70, detune:  0 }, // D2
+        { type: 'sawtooth', freq: 146.83, gain: 0.25, detune: -8 }, // D3
+        { type: 'sawtooth', freq: 220.00, gain: 0.18, detune:  8 }, // A3
+      ],
+      filter: { type: 'lowpass', freq: 400, Q: 1.2, lfoRate: 0.5, lfoDepth: 80 },
+    },
+  };
+
+  const moodLayers = {}; // { melancholic: {...}, luminous: {...}, tense: {...} }
+
+  function makeMoodLayer(name, cfg) {
+    const moodGain = AC.createGain();
+    moodGain.gain.value = 0;
+
+    // split dry/reverb
+    const dryGain = AC.createGain();
+    dryGain.gain.value = 0.7;
+    const wetGain = AC.createGain();
+    wetGain.gain.value = 0.6;
+
+    moodGain.connect(dryGain).connect(master);
+    moodGain.connect(wetGain).connect(reverbSend);
+
+    // filtro principale + LFO
+    const filt = AC.createBiquadFilter();
+    filt.type = cfg.filter.type;
+    filt.frequency.value = cfg.filter.freq;
+    filt.Q.value = cfg.filter.Q;
+
+    const lfo = AC.createOscillator();
+    const lfoGain = AC.createGain();
+    lfo.frequency.value = cfg.filter.lfoRate;
+    lfoGain.gain.value = cfg.filter.lfoDepth;
+    lfo.connect(lfoGain).connect(filt.frequency);
+    lfo.start();
+
+    // eventuale highpass (solo luminous)
+    let input = filt;
+    if (cfg.highpass) {
+      const hp = AC.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = cfg.highpass.freq;
+      input.connect(hp).connect(moodGain);
+    } else {
+      filt.connect(moodGain);
+    }
+
+    // oscillatori
+    cfg.oscillators.forEach((o) => {
+      const osc = AC.createOscillator();
+      osc.type = o.type;
+      osc.frequency.value = o.freq;
+      osc.detune.value = o.detune;
+      const g = AC.createGain();
+      g.gain.value = o.gain;
+      osc.connect(g).connect(filt);
+      osc.start();
+    });
+
+    return { moodGain, filt };
+  }
+
+  function buildMoodLayers() {
+    for (const name of Object.keys(MOODS_CONFIG)) {
+      moodLayers[name] = makeMoodLayer(name, MOODS_CONFIG[name]);
+    }
+  }
+
   // ---------- DroneLayer ----------
   // Drone di base: 3 oscillatori detuned (C2, G2, C3) + lowpass con LFO lento.
   // Sempre attivo finché l'audio è on. Non passa per reverb.
@@ -110,6 +201,7 @@
     if (started) return;
     buildDroneLayer();
     buildReverbBus();
+    buildMoodLayers();
     started = true;
   }
 
@@ -131,5 +223,6 @@
   function toggle() { running ? stop() : start(); }
   function isOn() { return running; }
 
+  window.__soundDebug = { moodLayers: () => moodLayers };
   window.__sound = { start, stop, toggle, isOn };
 })();
