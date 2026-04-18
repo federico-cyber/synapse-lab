@@ -18,10 +18,10 @@ import App from './app.jsx';
 
 const rootEl = document.getElementById('main');
 
-if (import.meta.env.DEV) {
-  // In dev: #main è vuoto, React crea il tree da zero.
-  createRoot(rootEl).render(<App />);
-} else {
-  // In prod: lo snapshot ha riempito #main, hydrateRoot prende possesso del DOM.
+// Se #main ha già contenuto (snapshot Puppeteer o HTML pre-renderizzato in prod):
+// usa hydrateRoot. Altrimenti (dev server o primo snapshot su dist/ vuoto): createRoot.
+if (rootEl.children.length > 0) {
   hydrateRoot(rootEl, <App />);
+} else {
+  createRoot(rootEl).render(<App />);
 }
