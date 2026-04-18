@@ -437,8 +437,8 @@
     ch1: 'melancholic',
     ch2: 'melancholic',
     ch3: 'melancholic',
-    ch4: 'luminous',
-    ch5: 'luminous',
+    ch4: 'melancholic',
+    ch5: 'melancholic',
     ch6: 'melancholic',
     ch7: 'tense',
   };
