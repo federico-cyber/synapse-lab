@@ -55,12 +55,12 @@
     },
     luminous: {
       oscillators: [
-        { type: 'sine',     freq: 523.25, gain: 0.45, detune:  0 }, // C5
-        { type: 'sine',     freq: 659.25, gain: 0.35, detune:  3 }, // E5
-        { type: 'sawtooth', freq: 783.99, gain: 0.15, detune: -5 }, // G5
+        { type: 'sine',     freq: 261.63, gain: 0.45, detune:  0 }, // C4
+        { type: 'sine',     freq: 329.63, gain: 0.35, detune:  3 }, // E4
+        { type: 'triangle', freq: 392.00, gain: 0.15, detune: -5 }, // G4
       ],
-      filter: { type: 'lowpass', freq: 3000, Q: 0.9, lfoRate: 0.12, lfoDepth: 400 },
-      highpass: { freq: 200 },
+      filter: { type: 'lowpass', freq: 1800, Q: 0.9, lfoRate: 0.12, lfoDepth: 200 },
+      highpass: { freq: 120 },
     },
     tense: {
       oscillators: [
