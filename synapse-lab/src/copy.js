@@ -1,5 +1,5 @@
 /* Copy module — all IT/EN strings for every chapter, in one place. */
-window.COPY = {
+export const COPY = {
   nav: {
     manifesto: { it: "Manifesto", en: "Manifesto" },
     services:  { it: "Servizi",   en: "Work" },
