@@ -1,0 +1,10 @@
+# robots.txt — Synapse Lab
+# https://federico-cyber.github.io/synapse-lab/
+
+User-agent: *
+Allow: /
+
+Disallow: /docs/
+Disallow: /prompt-design.md
+
+Sitemap: https://federico-cyber.github.io/synapse-lab/sitemap.xml
