@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Cache
+.vite/
+*.log
+
+# Puppeteer local cache (se eventualmente creata fuori node_modules)
+.cache/
