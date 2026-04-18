@@ -1,6 +1,12 @@
 /* Root mount: language, theme, tweaks state, nav behaviour, rail clock,
    scroll reveals, sound toggle, SYN easter egg. */
-const { useState, useEffect } = React;
+import { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import {
+  ChapterHero, ChapterManifesto, ChapterServices, ChapterProcess,
+  ChapterStack, ChapterAbout, ChapterContact
+} from './chapters.jsx';
+import { TweaksMount } from './tweaks.jsx';
 
 function App() {
   const [lang, setLang] = useState(window.TWEAKS.lang || 'it');
@@ -154,13 +160,13 @@ function App() {
 
   return (
     <>
-      <ChapterHero lang={lang} />
-      <ChapterManifesto lang={lang} />
-      <ChapterServices lang={lang} />
-      <ChapterProcess lang={lang} />
-      <ChapterStack lang={lang} />
-      <ChapterAbout lang={lang} />
-      <ChapterContact lang={lang} theme={tweaks.theme}
+      <ChapterHero lang={lang} tweaks={tweaks} />
+      <ChapterManifesto lang={lang} tweaks={tweaks} />
+      <ChapterServices lang={lang} tweaks={tweaks} />
+      <ChapterProcess lang={lang} tweaks={tweaks} />
+      <ChapterStack lang={lang} tweaks={tweaks} />
+      <ChapterAbout lang={lang} tweaks={tweaks} />
+      <ChapterContact lang={lang} tweaks={tweaks} theme={tweaks.theme}
         onToggleTheme={() => updateTweaks({ theme: tweaks.theme === 'light' ? 'dark' : 'light' })}/>
       <TweaksPortal lang={lang} state={tweaks} onChange={updateTweaks}/>
     </>
@@ -176,9 +182,8 @@ function TweaksPortal({ lang, state, onChange }) {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('main'));
-root.render(<App />);
-
 window.addEventListener('DOMContentLoaded', () => {
   if (window.__applyLang) window.__applyLang(window.TWEAKS.lang || 'it');
 });
+
+export default App;
