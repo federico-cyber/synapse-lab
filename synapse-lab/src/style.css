@@ -961,3 +961,145 @@ body[data-wireframe="true"] em { color: var(--accent) !important; font-style: no
   #tweaks-mount { right: 10px; bottom: 10px; }
   .tweaks { width: 280px; max-height: 70vh; }
 }
+
+/* ============================================================
+   Mobile — Tablet portrait (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Navbar: nascondi link desktop, icone e CTA; mostra hamburger */
+  #nav .nav-right > .nav-link,
+  #nav .nav-right > .nav-divider,
+  #nav .nav-right > .nav-icon,
+  #nav .nav-right > .nav-cta { display: none; }
+  #nav .hamburger { display: inline-flex; }
+
+  /* Overlay menu: full screen */
+  #menu-overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: var(--bg-0);
+    flex-direction: column;
+    padding: 88px 32px 32px;
+    transform: translateY(-100%);
+    transition: transform 220ms cubic-bezier(.2,.7,.2,1);
+    pointer-events: none;
+  }
+  body.menu-open #menu-overlay { transform: translateY(0); pointer-events: auto; }
+  body.menu-open { overflow: hidden; }
+
+  #menu-overlay .menu-link {
+    font-family: inherit;
+    font-size: clamp(2rem, 8vw, 3.25rem);
+    font-weight: 500;
+    color: var(--ink);
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 14px 0;
+    cursor: pointer;
+    border-bottom: 1px solid var(--line);
+    min-height: 44px;
+  }
+  #menu-overlay .menu-link:active { color: var(--accent); }
+  #menu-overlay .menu-footer {
+    margin-top: auto;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  #menu-overlay .menu-footer button { min-height: 44px; }
+
+  /* Tweaks panel: drawer dal basso */
+  #tweaks-mount {
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0;
+  }
+  .tweaks {
+    width: 100% !important;
+    max-height: 70vh !important;
+    border-radius: 16px 16px 0 0;
+  }
+}
+
+/* ============================================================
+   Mobile — Phone (≤ 560px)
+   ============================================================ */
+@media (max-width: 560px) {
+  /* Spacing capitoli: ridotto */
+  .chapter {
+    padding-top: 72px;
+    padding-bottom: 72px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Touch target: pulsanti ≥ 44×44 */
+  button, .btn, .nav-cta, .nav-icon, .menu-link {
+    min-height: 44px;
+  }
+
+  /* Grain: texture più piccola per risparmiare memoria GPU */
+  #grain { background-size: 96px 96px; }
+
+  /* Stack a colonna singola dove serve */
+  .services[data-layout="grid-soft"] .svc,
+  .services[data-layout="cards"] .svc,
+  .tech-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ============================================================
+   Mobile — Small phone (≤ 380px)
+   ============================================================ */
+@media (max-width: 380px) {
+  .chapter {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .tweaks { padding: 16px !important; }
+}
+
+/* ============================================================
+   Hamburger button (default: hidden; mostrato a ≤ 768px)
+   ============================================================ */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  z-index: 9100;
+  position: relative;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.6px;
+  background: var(--ink);
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+body.menu-open .hamburger span:nth-child(1) { transform: translateY(6.6px) rotate(45deg); }
+body.menu-open .hamburger span:nth-child(2) { opacity: 0; }
+body.menu-open .hamburger span:nth-child(3) { transform: translateY(-6.6px) rotate(-45deg); }
+
+#menu-overlay { display: none; }
+
+/* ============================================================
+   Accessibilità — prefers-reduced-motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
