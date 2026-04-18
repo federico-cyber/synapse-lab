@@ -12,19 +12,53 @@
 
   // ---------- Stato globale del modulo ----------
   let AC = null;           // AudioContext
-  let master = null;       // masterGain
+  let master = null;       // masterGain → destination
   let running = false;     // audio attualmente udibile
   let started = false;     // nodi costruiti almeno una volta
 
-  // ---------- API pubblica (stub, implementata nei task successivi) ----------
+  const FADE_IN = 0.8;     // secondi
+  const FADE_OUT = 0.45;
+  const MASTER_TARGET = 0.55;
+
+  // ---------- AudioEngine ----------
+  function ensureContext() {
+    if (AC) return AC;
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    AC = new Ctx();
+    master = AC.createGain();
+    master.gain.value = 0;
+    master.connect(AC.destination);
+    return AC;
+  }
+
+  function fadeMasterTo(target, duration) {
+    if (!AC || !master) return;
+    const now = AC.currentTime;
+    master.gain.cancelScheduledValues(now);
+    master.gain.setValueAtTime(master.gain.value, now);
+    master.gain.linearRampToValueAtTime(target, now + duration);
+  }
+
+  function buildGraphOnce() {
+    if (started) return;
+    // I layer verranno costruiti nei task successivi.
+    started = true;
+  }
+
+  // ---------- API pubblica ----------
   function start() {
-    console.log('[sound] start() — stub');
+    if (!ensureContext()) return;
+    if (AC.state === 'suspended') AC.resume();
+    buildGraphOnce();
     running = true;
+    fadeMasterTo(MASTER_TARGET, FADE_IN);
   }
 
   function stop() {
-    console.log('[sound] stop() — stub');
+    if (!AC || !master) return;
     running = false;
+    fadeMasterTo(0, FADE_OUT);
   }
 
   function toggle() { running ? stop() : start(); }
