@@ -164,7 +164,7 @@
         [0.30, 0.20, 0.20, 0.25, 0.05],
       ],
       intervalMs: () => 5000 + Math.random() * 4000, // 5-9s
-      probability: 0.65,
+      probability: 0, // disabilitato: solo pad di sottofondo per luminous
       oscType: 'sine',
       adsr: { a: 1.0, d: 0.2, s: 0.5, r: 1.5 },
       gain: 0.04,
