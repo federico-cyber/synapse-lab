@@ -4,7 +4,8 @@
    NOTE: dangerouslySetInnerHTML is used with static COPY values defined
    in copy.jsx only — no user input flows into these strings. */
 
-const { useState, useEffect, useRef, useMemo } = React;
+import { useState, useEffect, useRef, useMemo } from 'react';
+import { COPY } from './copy.js';
 
 const L = (it, en) => (window.__lang === 'en' ? en : it);
 
@@ -28,7 +29,7 @@ function ChapterHero({ lang }) {
     if (el) setTimeout(() => el.classList.add('in'), 120);
   }, [lang, heroStyle]);
 
-  const C = window.COPY.hero;
+  const C = COPY.hero;
   const titleBold = lang === 'en' ? C.titleBoldEN : C.titleBoldIT;
   const titleEdit = lang === 'en' ? C.titleEditEN : C.titleEditIT;
   const titleBrutal = lang === 'en' ? ["Digital", "synapses,", "with care."] : ["Sinapsi", "digitali,", "con cura."];
@@ -94,7 +95,7 @@ function ChapterHero({ lang }) {
 
 /* ------------------- Ch2 — Manifesto ------------------- */
 function ChapterManifesto({ lang }) {
-  const C = window.COPY.manifesto;
+  const C = COPY.manifesto;
   const q = (qObj) => qObj[lang];
   return (
     <section id="ch2" className="chapter" data-screen-label="02 Manifesto">
@@ -123,7 +124,7 @@ function ChapterManifesto({ lang }) {
 
 /* ------------------- Ch3 — Services ------------------- */
 function ChapterServices({ lang }) {
-  const C = window.COPY.services;
+  const C = COPY.services;
   const layout = window.TWEAKS.servicesLayout || 'grid-soft';
 
   const handleMove = (e) => {
@@ -181,7 +182,7 @@ function ChapterServices({ lang }) {
 
 /* ------------------- Ch4 — Process ------------------- */
 function ChapterProcess({ lang }) {
-  const C = window.COPY.process;
+  const C = COPY.process;
   const [progress, setProgress] = useState(0);
   const sectionRef = useRef(null);
 
@@ -227,7 +228,7 @@ function ChapterProcess({ lang }) {
 
 /* ------------------- Ch5 — Stack ------------------- */
 function ChapterStack({ lang }) {
-  const C = window.COPY.stack;
+  const C = COPY.stack;
   return (
     <section id="ch5" className="chapter" data-screen-label="05 Stack">
       <div className="chapter-meta reveal">
@@ -260,7 +261,7 @@ function ChapterStack({ lang }) {
 
 /* ------------------- Ch6 — About ------------------- */
 function ChapterAbout({ lang }) {
-  const C = window.COPY.about;
+  const C = COPY.about;
   return (
     <section id="ch6" className="chapter" data-screen-label="06 About">
       <div className="chapter-meta reveal">
@@ -289,7 +290,7 @@ function ChapterAbout({ lang }) {
 
 /* ------------------- Ch7 — Contact ------------------- */
 function ChapterContact({ lang, onToggleTheme, theme }) {
-  const C = window.COPY.contact;
+  const C = COPY.contact;
   const [copied, setCopied] = useState(false);
   const copyEmail = () => {
     const email = C.cards[1].email;
@@ -375,8 +376,8 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
   );
 }
 
-/* Expose all chapters */
-Object.assign(window, {
+/* Export all chapters */
+export {
   ChapterHero, ChapterManifesto, ChapterServices, ChapterProcess,
   ChapterStack, ChapterAbout, ChapterContact
-});
+};
