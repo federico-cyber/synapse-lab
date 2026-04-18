@@ -9,7 +9,8 @@
 (function () {
   const canvas = document.getElementById('neural');
   const ctx = canvas.getContext('2d', { alpha: true });
-  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const IS_MOBILE = window.matchMedia('(max-width: 768px)').matches;
+  let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1.5 : 2);
 
   // Read current palette from CSS so scene matches theme/tweaks
   function readPalette() {
@@ -55,7 +56,7 @@
   updateScroll();
 
   // ---- Nodes ----
-  const NODE_COUNT = 62;
+  const NODE_COUNT = IS_MOBILE ? 24 : 62;
   const nodes = [];
   for (let i = 0; i < NODE_COUNT; i++) {
     const r = Math.pow(Math.random(), 0.7) * 0.46 + 0.04;
@@ -275,7 +276,7 @@
       ctx.fill();
     }
 
-    requestAnimationFrame(frame);
+    if (!document.hidden && !prefersReduced) requestAnimationFrame(frame);
   }
 
   function hex2rgba(hex, a) {
@@ -291,6 +292,9 @@
   }
 
   requestAnimationFrame(frame);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && !prefersReduced) requestAnimationFrame(frame);
+  });
 
   // expose palette refresh hook for tweak/theme changes
   window.__neural = { refresh: () => { PAL = readPalette(); } };
