@@ -155,7 +155,7 @@
     },
     luminous: {
       // C Lydian subset (C E F# G A)
-      notes: [523.25, 659.25, 739.99, 783.99, 880.00], // C5, E5, F#5, G5, A5
+      notes: [261.63, 329.63, 369.99, 392.00, 440.00], // C4, E4, F#4, G4, A4
       matrix: [
         [0.10, 0.25, 0.15, 0.30, 0.20],
         [0.20, 0.10, 0.25, 0.25, 0.20],
@@ -166,8 +166,8 @@
       intervalMs: () => 5000 + Math.random() * 4000, // 5-9s
       probability: 0.65,
       oscType: 'sine',
-      adsr: { a: 1.5, d: 0.2, s: 0.7, r: 3.0 },
-      gain: 0.07,
+      adsr: { a: 1.0, d: 0.2, s: 0.5, r: 1.5 },
+      gain: 0.04,
       fm: { ratio: 3.5, depth: 60 }, // carattere bell-like
     },
     tense: {
