@@ -131,6 +131,32 @@
     }
   }
 
+  // ---------- StateController ----------
+  // Orchestratore dei mood. setMood(name) crossfada tra mood in CROSSFADE_S.
+  const CROSSFADE_S = 3.5;
+  let currentMood = null;
+
+  function setMood(name) {
+    if (!started || !moodLayers[name]) return;
+    if (currentMood === name) return;
+
+    const now = AC.currentTime;
+    // fade-out mood uscente
+    if (currentMood && moodLayers[currentMood]) {
+      const g = moodLayers[currentMood].moodGain.gain;
+      g.cancelScheduledValues(now);
+      g.setValueAtTime(g.value, now);
+      g.linearRampToValueAtTime(0, now + CROSSFADE_S);
+    }
+    // fade-in mood entrante
+    const gIn = moodLayers[name].moodGain.gain;
+    gIn.cancelScheduledValues(now);
+    gIn.setValueAtTime(gIn.value, now);
+    gIn.linearRampToValueAtTime(1.0, now + CROSSFADE_S);
+
+    currentMood = name;
+  }
+
   // ---------- DroneLayer ----------
   // Drone di base: 3 oscillatori detuned (C2, G2, C3) + lowpass con LFO lento.
   // Sempre attivo finché l'audio è on. Non passa per reverb.
@@ -212,6 +238,7 @@
     buildGraphOnce();
     running = true;
     fadeMasterTo(MASTER_TARGET, FADE_IN);
+    if (!currentMood) setMood('melancholic');
   }
 
   function stop() {
@@ -223,6 +250,6 @@
   function toggle() { running ? stop() : start(); }
   function isOn() { return running; }
 
-  window.__soundDebug = { moodLayers: () => moodLayers };
+  window.__soundDebug = { moodLayers: () => moodLayers, setMood };
   window.__sound = { start, stop, toggle, isOn };
 })();
