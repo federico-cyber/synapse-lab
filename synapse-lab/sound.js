@@ -43,10 +43,9 @@
   // ---------- DroneLayer ----------
   // Drone di base: 3 oscillatori detuned (C2, G2, C3) + lowpass con LFO lento.
   // Sempre attivo finché l'audio è on. Non passa per reverb.
-  let droneBus = null;
 
   function buildDroneLayer() {
-    droneBus = AC.createGain();
+    const droneBus = AC.createGain();
     droneBus.gain.value = 0.12;
 
     const lp = AC.createBiquadFilter();
@@ -80,7 +79,6 @@
   // IR procedurale: rumore bianco stereo decorrelato × exp decay.
   // 40 KB circa in RAM (3s × 2ch × 44.1kHz × 4byte). OK ovunque.
   let reverbSend = null;
-  let reverbOut = null;
 
   function buildImpulseResponse(durationSec, decay) {
     const len = Math.floor(AC.sampleRate * durationSec);
@@ -102,7 +100,7 @@
     reverbSend = AC.createGain();
     reverbSend.gain.value = 1.0;   // i send esterni useranno il proprio gain
 
-    reverbOut = AC.createGain();
+    const reverbOut = AC.createGain();
     reverbOut.gain.value = 0.7;    // wet level globale
 
     reverbSend.connect(convolver).connect(reverbOut).connect(master);
