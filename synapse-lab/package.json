@@ -1,0 +1,23 @@
+{
+  "name": "synapse-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "snapshot": "node scripts/snapshot.mjs",
+    "preview": "vite preview",
+    "seo-check": "bash scripts/seo-check.sh"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11",
+    "puppeteer": "^23.11.1",
+    "serve-handler": "^6.1.6"
+  }
+}
