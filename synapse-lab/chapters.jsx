@@ -357,10 +357,8 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
             <span>{lang === 'en' ? 'Privacy · Cookies' : 'Privacy · Cookie'}</span>
           </div>
           <div className="fl-col socials" style={{ alignSelf: 'flex-end' }}>
-            <a href="#">Twitter</a>
-            <a href="#">GitHub</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Instagram</a>
+            <a href="https://github.com/federico-cyber" rel="me noopener" target="_blank">GitHub</a>
+            <a href="mailto:battistella.business@gmail.com" rel="me">Email</a>
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-end' }}>
