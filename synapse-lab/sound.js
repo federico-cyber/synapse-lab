@@ -40,6 +40,42 @@
     master.gain.linearRampToValueAtTime(target, now + duration);
   }
 
+  // ---------- DroneLayer ----------
+  // Drone di base: 3 oscillatori detuned (C2, G2, C3) + lowpass con LFO lento.
+  // Sempre attivo finché l'audio è on. Non passa per reverb.
+  let droneBus = null;
+
+  function buildDroneLayer() {
+    droneBus = AC.createGain();
+    droneBus.gain.value = 0.12;
+
+    const lp = AC.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 520;
+    lp.Q.value = 0.7;
+
+    const lfo = AC.createOscillator();
+    const lfoGain = AC.createGain();
+    lfo.frequency.value = 0.08;
+    lfoGain.gain.value = 180;
+    lfo.connect(lfoGain).connect(lp.frequency);
+    lfo.start();
+
+    const freqs = [65.41, 98.00, 130.81]; // C2, G2, C3
+    freqs.forEach((f, i) => {
+      const o = AC.createOscillator();
+      o.type = i === 1 ? 'triangle' : 'sine';
+      o.frequency.value = f;
+      o.detune.value = (i - 1) * 4;
+      const g = AC.createGain();
+      g.gain.value = i === 0 ? 0.9 : (i === 1 ? 0.35 : 0.22);
+      o.connect(g).connect(lp);
+      o.start();
+    });
+
+    lp.connect(droneBus).connect(master);
+  }
+
   // ---------- ReverbBus ----------
   // IR procedurale: rumore bianco stereo decorrelato × exp decay.
   // 40 KB circa in RAM (3s × 2ch × 44.1kHz × 4byte). OK ovunque.
@@ -74,8 +110,8 @@
 
   function buildGraphOnce() {
     if (started) return;
+    buildDroneLayer();
     buildReverbBus();
-    // altri layer nei task successivi
     started = true;
   }
 
