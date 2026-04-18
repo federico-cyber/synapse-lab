@@ -8,13 +8,13 @@ window.COPY = {
   },
   hero: {
     metaLab: { it: "Studio di digital craft", en: "Digital craft studio" },
-    metaLoc: { it: "Bologna, Italia", en: "Bologna, Italy" },
+    metaLoc: { it: "Milano, Italia", en: "Milano, Italy" },
     metaYr:  { it: "Fondato MMXXV", en: "Est. MMXXV" },
     metaAvail: { it: "Disponibili da Q3 · 2026", en: "Booking from Q3 · 2026" },
-    titleBoldIT: ["Sinapsi", "digitali,", "costruite a", "mano."],
-    titleBoldEN: ["Digital", "synapses,", "hand", "crafted."],
-    titleEditIT: ["Sinapsi", "digitali,", "costruite a mano."],
-    titleEditEN: ["Digital", "synapses,", "hand-crafted."],
+    titleBoldIT: ["Sinapsi", "digitali,", "progettate con", "cura."],
+    titleBoldEN: ["Digital", "synapses,", "crafted with", "care."],
+    titleEditIT: ["Sinapsi", "digitali,", "progettate con cura."],
+    titleEditEN: ["Digital", "synapses,", "crafted with care."],
     sub: {
       it: "Synapse Lab progetta e costruisce esperienze web al confine tra design, codice e sperimentazione interattiva. Pochi progetti l'anno — <b>ognuno come fosse l'unico</b>.",
       en: "Synapse Lab designs and builds web experiences at the edge of design, code, and interactive experimentation. Few projects a year — <b>each one treated like the only one</b>."
@@ -61,8 +61,8 @@ window.COPY = {
       { num: "02", tag: { it: "Build", en: "Build" },
         title: { it: "Development & <em>Performance</em>", en: "Development & <em>Performance</em>" },
         desc: {
-          it: "Next.js, React, Three.js. Codice scritto a mano, Lighthouse verde, accessibilità seria.",
-          en: "Next.js, React, Three.js. Handwritten code, green Lighthouse, accessibility taken seriously."
+          it: "Next.js, React, Three.js. AI integrata nei workflow, Lighthouse verde, accessibilità seria.",
+          en: "Next.js, React, Three.js. AI woven into the workflow, green Lighthouse, accessibility taken seriously."
         },
         chips: ["Next.js", "React / R3F", "TypeScript", "A11y · WCAG AA"],
         chipsEn: ["Next.js", "React / R3F", "TypeScript", "A11y · WCAG AA"]
@@ -135,17 +135,17 @@ window.COPY = {
   },
   about: {
     label: { it: "Capitolo 06 · Studio", en: "Chapter 06 · Studio" },
-    name: { it: "<em>Federico.</em>", en: "<em>Federico.</em>" },
+    name: { it: "<em>Federico Battistella.</em>", en: "<em>Federico Battistella.</em>" },
     role: { it: "Fondatore & Principal", en: "Founder & Principal" },
     bio: {
-      it: "Progetto e costruisco siti da quando il web era brutto. Synapse Lab è il mio tentativo di farlo come credo si debba fare: pochi progetti, fatti bene, con le mani. Nessun team di ventitré persone. Nessuna roadmap di deck. Solo il lavoro, e il tempo per farlo.",
-      en: "I've been designing and building sites since the web was ugly. Synapse Lab is my attempt to do it the way I think it should be done: few projects, done well, by hand. No team of twenty-three. No deck-shaped roadmap. Just the work, and the time to do it."
+      it: "Progetto e costruisco siti da quando il web era brutto. Synapse Lab è il mio tentativo di farlo come credo si debba fare: pochi progetti, fatti bene, con cura. Nessun team di ventitré persone. Nessuna roadmap di deck. Solo il lavoro, e il tempo per farlo.",
+      en: "I've been designing and building sites since the web was ugly. Synapse Lab is my attempt to do it the way I think it should be done: few projects, done well, with care. No team of twenty-three. No deck-shaped roadmap. Just the work, and the time to do it."
     },
     contacts: [
-      { label: "Email",  href: "mailto:federico@arautoricambi.com", text: "federico@arautoricambi.com" },
-      { label: "X",      href: "#", text: "@federico" },
-      { label: "GitHub", href: "#", text: "/federico" },
-      { label: "LinkedIn", href: "#", text: "/in/federico" },
+      { label: "Email",  href: "mailto:battistella.business@gmail.com", text: "battistella.business@gmail.com" },
+      { label: "X",      href: "#", text: "@battistella" },
+      { label: "GitHub", href: "#", text: "/battistella" },
+      { label: "LinkedIn", href: "#", text: "/in/battistella" },
     ]
   },
   contact: {
@@ -161,7 +161,7 @@ window.COPY = {
                 en: "30 minutes. No pre-prepared brief. Tell me what's on your mind." },
         action: { it: "Apri Calendly", en: "Open Calendly" } },
       { tag: { it: "Email diretta", en: "Direct email" },
-        email: "federico@arautoricambi.com",
+        email: "battistella.business@gmail.com",
         desc: { it: "Risposta entro 48h, sempre. Anche per dire di no.",
                 en: "Reply within 48h, always. Even to say no." },
         action: { it: "Copia indirizzo", en: "Copy address" } },
@@ -173,8 +173,8 @@ window.COPY = {
     ],
     footer: {
       joke: {
-        it: "// built with care in Bologna, Italy — and just enough espresso",
-        en: "// built with care in Bologna, Italy — and just enough espresso"
+        it: "// built with care in Milano, Italy — and just enough espresso",
+        en: "// built with care in Milano, Italy — and just enough espresso"
       }
     }
   }

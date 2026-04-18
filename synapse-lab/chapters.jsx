@@ -31,7 +31,7 @@ function ChapterHero({ lang }) {
   const C = window.COPY.hero;
   const titleBold = lang === 'en' ? C.titleBoldEN : C.titleBoldIT;
   const titleEdit = lang === 'en' ? C.titleEditEN : C.titleEditIT;
-  const titleBrutal = lang === 'en' ? ["Digital", "synapses,", "handmade."] : ["Sinapsi", "digitali,", "a mano."];
+  const titleBrutal = lang === 'en' ? ["Digital", "synapses,", "with care."] : ["Sinapsi", "digitali,", "con cura."];
 
   return (
     <section id="ch1" className="chapter hero" data-screen-label="01 Hero" data-style={heroStyle}>
@@ -268,13 +268,12 @@ function ChapterAbout({ lang }) {
         <span>{L(C.label.it, C.label.en)}</span>
       </div>
       <div className="about-wrap">
-        <div className="about-portrait reveal" aria-label="portrait of Federico"/>
         <div className="reveal">
           <span className="about-role">{L(C.role.it, C.role.en)}</span>
           <h2 className="about-name" dangerouslySetInnerHTML={rawHtml(L(C.name.it, C.name.en))}/>
         </div>
         <p className="about-bio reveal">{L(C.bio.it, C.bio.en)}</p>
-        <div className="about-sign reveal">Federico</div>
+        <div className="about-sign reveal">F. Battistella</div>
         <div className="about-contacts reveal">
           {C.contacts.map((c, i) => (
             <div key={i}>
@@ -349,8 +348,8 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
         <div className="fl-cols">
           <div className="fl-col">
             <b>Synapse Lab</b>
-            <span>44.4949° N · 11.3426° E</span>
-            <span>Bologna, IT</span>
+            <span>45.4642° N · 9.1900° E</span>
+            <span>Milano, IT</span>
           </div>
           <div className="fl-col">
             <b>{lang === 'en' ? 'Legal' : 'Legale'}</b>
