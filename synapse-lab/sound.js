@@ -563,12 +563,45 @@
     if (!AC || !master) return;
     running = false;
     stopArpeggiator();
+    if (debounceTimer) { clearTimeout(debounceTimer); debounceTimer = null; }
+    pendingMood = null;
     fadeMasterTo(0, FADE_OUT);
   }
 
   function toggle() { running ? stop() : start(); }
   function isOn() { return running; }
 
-  window.__soundDebug = { moodLayers: () => moodLayers, setMood };
+  // ---------- Lifecycle ----------
+  // Il toggle iniziale è comunque off: questi gate servono a comportamenti
+  // secondari come pausa su tab nascosta e rispetto reduced-motion.
+
+  // isMobile(): esporlo tramite __soundDebug per eventuali decisioni future.
+  function isMobile() {
+    return window.matchMedia && matchMedia('(pointer: coarse)').matches;
+  }
+
+  function prefersReducedMotion() {
+    return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  // Page Visibility: quando la tab torna in background, abbassiamo il master;
+  // al ritorno, se running, lo riportiamo a target.
+  let visibilityMuted = false;
+  document.addEventListener('visibilitychange', () => {
+    if (!AC || !master) return;
+    if (document.hidden) {
+      if (running) {
+        visibilityMuted = true;
+        fadeMasterTo(0, 0.5);
+      }
+    } else {
+      if (visibilityMuted && running) {
+        fadeMasterTo(MASTER_TARGET, 0.5);
+        visibilityMuted = false;
+      }
+    }
+  });
+
+  window.__soundDebug = { moodLayers: () => moodLayers, setMood, isMobile, prefersReducedMotion };
   window.__sound = { start, stop, toggle, isOn };
 })();
