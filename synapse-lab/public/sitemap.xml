@@ -7,7 +7,16 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://federico-cyber.github.io/synapse-lab/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://federico-cyber.github.io/synapse-lab/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://federico-cyber.github.io/synapse-lab/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://federico-cyber.github.io/synapse-lab/"/>
+  </url>
+  <url>
+    <loc>https://federico-cyber.github.io/synapse-lab/en/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://federico-cyber.github.io/synapse-lab/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://federico-cyber.github.io/synapse-lab/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://federico-cyber.github.io/synapse-lab/"/>
   </url>
 </urlset>
