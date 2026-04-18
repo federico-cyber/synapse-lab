@@ -192,6 +192,48 @@
     currentMood = name;
   }
 
+  // ---------- ScrollObserver ----------
+  // Mapping capitolo → mood da design spec sezione 5.
+  const CHAPTER_TO_MOOD = {
+    ch1: 'melancholic',
+    ch2: 'melancholic',
+    ch3: 'luminous',
+    ch4: 'luminous',
+    ch5: 'luminous',
+    ch6: 'melancholic',
+    ch7: 'tense',
+  };
+
+  let observer = null;
+  let pendingMood = null;
+  let debounceTimer = null;
+
+  function onIntersect(entries) {
+    for (const e of entries) {
+      if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+        const id = e.target.id;
+        const mood = CHAPTER_TO_MOOD[id];
+        if (!mood) continue;
+        pendingMood = mood;
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          if (running && pendingMood) setMood(pendingMood);
+        }, 800);
+        break;
+      }
+    }
+  }
+
+  function startObserver() {
+    if (observer) return;
+    const sections = Object.keys(CHAPTER_TO_MOOD)
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    if (!sections.length) return;
+    observer = new IntersectionObserver(onIntersect, { threshold: [0.5] });
+    sections.forEach((s) => observer.observe(s));
+  }
+
   // ---------- DroneLayer ----------
   // Drone di base: 3 oscillatori detuned (C2, G2, C3) + lowpass con LFO lento.
   // Sempre attivo finché l'audio è on. Non passa per reverb.
@@ -273,6 +315,7 @@
     running = true;
     fadeMasterTo(MASTER_TARGET, FADE_IN);
     if (!currentMood) setMood('melancholic');
+    startObserver();
   }
 
   function stop() {
