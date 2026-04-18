@@ -335,6 +335,102 @@
     arpLastNoteIdx = null; // cambia scala, matrice riparte pulita
   }
 
+  // ---------- AccentLayer ----------
+  // Feedback UI: shimmer su hover dei magnet (30%), blip su click.
+  // Rate limiter globale 3/sec + velocity compensation.
+  const ACCENT_WINDOW_MS = 500;
+  const ACCENT_MAX_PER_SEC = 3;
+  let recentAccents = []; // timestamps ms
+
+  function rateOk() {
+    const now = performance.now();
+    recentAccents = recentAccents.filter((t) => now - t < 1000);
+    if (recentAccents.length >= ACCENT_MAX_PER_SEC) return false;
+    recentAccents.push(now);
+    return true;
+  }
+
+  function velocityFactor() {
+    const now = performance.now();
+    const recent = recentAccents.filter((t) => now - t < ACCENT_WINDOW_MS);
+    return recent.length >= 2 ? 0.6 : 1.0;
+  }
+
+  function playShimmer() {
+    if (!running || !rateOk()) return;
+    const now = AC.currentTime;
+    const baseFreq = 2000 + Math.random() * 1000; // 2-3 kHz
+    const detune = (Math.random() * 2 - 1) * 15;  // ±15 cent
+    const gainPeak = 0.04 * velocityFactor();
+
+    const osc = AC.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = baseFreq;
+    osc.detune.value = detune;
+
+    const env = AC.createGain();
+    env.gain.setValueAtTime(0, now);
+    env.gain.linearRampToValueAtTime(gainPeak, now + 0.08);
+    env.gain.exponentialRampToValueAtTime(0.0001, now + 0.48);
+
+    const dry = AC.createGain(); dry.gain.value = 0.7;
+    const wet = AC.createGain(); wet.gain.value = 0.3;
+
+    osc.connect(env);
+    env.connect(dry).connect(master);
+    env.connect(wet).connect(reverbSend);
+
+    osc.start(now);
+    osc.stop(now + 0.55);
+  }
+
+  function playBlip() {
+    if (!running || !rateOk()) return;
+    const now = AC.currentTime;
+    const gainPeak = 0.10 * velocityFactor();
+
+    const osc = AC.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1760, now); // ottava sopra
+    osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+
+    const env = AC.createGain();
+    env.gain.setValueAtTime(0, now);
+    env.gain.linearRampToValueAtTime(gainPeak, now + 0.005);
+    env.gain.exponentialRampToValueAtTime(0.0001, now + 0.20);
+
+    const dry = AC.createGain(); dry.gain.value = 0.7;
+    const wet = AC.createGain(); wet.gain.value = 0.3;
+
+    osc.connect(env);
+    env.connect(dry).connect(master);
+    env.connect(wet).connect(reverbSend);
+
+    osc.start(now);
+    osc.stop(now + 0.25);
+  }
+
+  function installAccentListeners() {
+    document.addEventListener('mouseover', (e) => {
+      const el = e.target && e.target.closest && e.target.closest('[data-magnet]');
+      if (!el) return;
+      if (Math.random() < 0.30) playShimmer();
+    });
+    document.addEventListener('click', (e) => {
+      const el = e.target && e.target.closest && e.target.closest('a, button, [data-magnet]');
+      if (!el) return;
+      if (el.id === 'sound-toggle') return; // non accentiamo il toggle del suono
+      playBlip();
+    });
+  }
+
+  let accentListenersInstalled = false;
+  function installAccentListenersOnce() {
+    if (accentListenersInstalled) return;
+    installAccentListeners();
+    accentListenersInstalled = true;
+  }
+
   // ---------- ScrollObserver ----------
   // Mapping capitolo → mood da design spec sezione 5.
   const CHAPTER_TO_MOOD = {
@@ -460,6 +556,7 @@
     if (!currentMood) setMood('melancholic');
     startObserver();
     startArpeggiator();
+    installAccentListenersOnce();
   }
 
   function stop() {
