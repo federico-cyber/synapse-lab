@@ -72,7 +72,7 @@ Già nascosto sotto 900px. Ok così.
 - `index.html` punta ai `.js` compilati, NON carica più `@babel/standalone` né `react.development.js`/`react-dom.development.js` (si passa alla build `.production.min.js`).
 - Saving: **~400 KB di JS bloccante rimosso**, parse/exec ridotto di ~70%.
 
-**Dev experience** (opzionale): per il dev locale, un flag `?dev=1` in URL fa fallback al path `@babel/standalone` + `.jsx` tramite condizionale all'inizio di `index.html`. Se Federico preferisce, si può rinunciare e obbligare il build prima di ogni sessione — decisione rimandata al piano di implementazione.
+**Dev experience** (decisa): flag `?dev=1` in URL fa fallback al path `@babel/standalone` + `.jsx` tramite condizionale all'inizio di `index.html`. Così Federico può iterare localmente senza rilanciare il build a ogni modifica di un `.jsx`. Il build resta obbligatorio solo prima del push in produzione (automatizzabile nel workflow GitHub Actions).
 
 ### 2.2 Canvas neural adattivo
 
