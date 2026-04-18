@@ -1,5 +1,5 @@
 /* Tweaks panel — live design controls persisted to localStorage. */
-const { useState } = React;
+import { useState } from 'react';
 
 function Tweaks({ lang, onChange, state, onClose }) {
   const set = (patch) => onChange(patch);
@@ -108,4 +108,4 @@ function TweaksMount({ lang, state, onChange }) {
   return <Tweaks lang={lang} state={state} onChange={onChange} onClose={() => setOpen(false)} />;
 }
 
-window.TweaksMount = TweaksMount;
+export { TweaksMount };
