@@ -54,7 +54,8 @@ function App() {
     return () => { if (b) b.removeEventListener('click', toggle); };
   }, [lang]);
 
-  // Sound toggle (visual only — no actual audio wired up to avoid surprise autoplay)
+  // Sound toggle — drives the ambient soundscape in sound.js
+  // (AudioContext lazily created on first click to satisfy autoplay policy)
   useEffect(() => {
     const b = document.getElementById('sound-toggle');
     if (!b) return;
@@ -63,6 +64,10 @@ function App() {
       document.body.setAttribute('data-sound', on ? 'off' : 'on');
       const s = b.querySelector('.sound-state');
       if (s) s.textContent = on ? 'OFF' : 'ON';
+      if (window.__sound) {
+        if (on) window.__sound.stop();
+        else window.__sound.start();
+      }
     };
     b.addEventListener('click', toggle);
     return () => b.removeEventListener('click', toggle);
