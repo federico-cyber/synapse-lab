@@ -7,7 +7,7 @@
 <meta name="description" content="Synapse Lab è uno studio di web design e sviluppo a Milano. Siti su misura con Next.js, React e Three.js — pochi progetti l'anno, fatti con cura.">
 <link rel="canonical" href="https://federico-cyber.github.io/synapse-lab/">
 <link rel="alternate" hreflang="it" href="https://federico-cyber.github.io/synapse-lab/">
-<link rel="alternate" hreflang="en" href="https://federico-cyber.github.io/synapse-lab/?lang=en">
+<link rel="alternate" hreflang="en" href="https://federico-cyber.github.io/synapse-lab/en/">
 <link rel="alternate" hreflang="x-default" href="https://federico-cyber.github.io/synapse-lab/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="author" content="Federico Battistella">
@@ -34,35 +34,11 @@
 <meta name="twitter:description" content="Sinapsi digitali, progettate con cura. Pochi progetti l'anno — ognuno come fosse l'unico.">
 <meta name="twitter:image" content="https://federico-cyber.github.io/synapse-lab/og-image.png">
 
-<!-- Fonts: Space Grotesk (display) + Instrument Serif (editorial) + JetBrains Mono (lab metadata) -->
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<script>
-  // --- TWEAKS (persisted in localStorage) ---
-  const DEFAULT_TWEAKS = {
-    "lang": "it",
-    "theme": "dark",
-    "palette": "blu",
-    "hero": "bold-type",
-    "servicesLayout": "grid-soft",
-    "butterflyDensity": 4,
-    "bubbleDensity": 20,
-    "cursor": "synapse",
-    "grainOn": true,
-    "wireframe": false
-  };
-  let saved = {};
-  try { saved = JSON.parse(localStorage.getItem('synapse.tweaks') || '{}'); } catch (e) {}
-  window.TWEAKS = Object.assign({}, DEFAULT_TWEAKS, saved);
-  window.__saveTweaks = (t) => {
-    try { localStorage.setItem('synapse.tweaks', JSON.stringify(t)); } catch (e) {}
-  };
-</script>
-
-<link rel="stylesheet" href="style.css">
 
 <script type="application/ld+json">
 {
@@ -187,21 +163,7 @@
   <!-- Wireframe overlay -->
   <div id="debug-toast" hidden>// debug mode — press <kbd>S Y N</kbd> to exit</div>
 
-  <!-- React + Babel (design prototype uses CDN + Babel standalone) -->
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
-
-  <!-- Vanilla scripts (run first) -->
-  <script src="neural.js"></script>
-  <script src="cursor.js"></script>
-  <script src="lang.js"></script>
-  <script src="sound.js"></script>
-
-  <!-- React components -->
-  <script type="text/babel" src="copy.jsx"></script>
-  <script type="text/babel" src="chapters.jsx"></script>
-  <script type="text/babel" src="tweaks.jsx"></script>
-  <script type="text/babel" src="mount.jsx"></script>
+  <!-- Vite module entry (compila src/main.jsx che importa tutto il resto) -->
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
