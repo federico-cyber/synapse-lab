@@ -24,13 +24,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: synapse-lab/package-lock.json
+
+      - name: Install deps
+        working-directory: ./synapse-lab
+        run: npm ci
+
+      - name: Build (Vite)
+        working-directory: ./synapse-lab
+        run: npm run build
+
+      - name: Snapshot (Puppeteer)
+        working-directory: ./synapse-lab
+        run: npm run snapshot
+
+      - name: SEO check
+        working-directory: ./synapse-lab
+        run: npm run seo-check
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./synapse-lab
+          path: ./synapse-lab/dist
 
   deploy:
     needs: build
