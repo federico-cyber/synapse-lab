@@ -132,6 +132,148 @@
     }
   }
 
+  // ---------- Arpeggiator ----------
+  // Per ogni mood: scala di 5 note + matrice Markov 5x5.
+  // Timer randomizzato, probabilità di "suonare" per evitare uniformità.
+  const ARP_CONFIG = {
+    melancholic: {
+      // A minor pentatonic, ottava media
+      notes: [220.00, 261.63, 293.66, 329.63, 392.00], // A3, C4, D4, E4, G4
+      matrix: [
+        [0.10, 0.30, 0.25, 0.20, 0.15],
+        [0.25, 0.10, 0.35, 0.20, 0.10],
+        [0.15, 0.30, 0.05, 0.35, 0.15],
+        [0.30, 0.20, 0.20, 0.05, 0.25],
+        [0.40, 0.15, 0.15, 0.20, 0.10],
+      ],
+      intervalMs: () => 9000 + Math.random() * 5000, // 9-14s
+      probability: 0.45,
+      oscType: 'sine',
+      adsr: { a: 2.0, d: 0.3, s: 0.6, r: 4.0 },
+      gain: 0.14,
+      fm: null,
+    },
+    luminous: {
+      // C Lydian subset (C E F# G A)
+      notes: [523.25, 659.25, 739.99, 783.99, 880.00], // C5, E5, F#5, G5, A5
+      matrix: [
+        [0.10, 0.25, 0.15, 0.30, 0.20],
+        [0.20, 0.10, 0.25, 0.25, 0.20],
+        [0.15, 0.30, 0.05, 0.25, 0.25],
+        [0.25, 0.15, 0.20, 0.10, 0.30],
+        [0.30, 0.20, 0.20, 0.25, 0.05],
+      ],
+      intervalMs: () => 5000 + Math.random() * 4000, // 5-9s
+      probability: 0.65,
+      oscType: 'sine',
+      adsr: { a: 1.5, d: 0.2, s: 0.7, r: 3.0 },
+      gain: 0.11,
+      fm: { ratio: 3.5, depth: 60 }, // carattere bell-like
+    },
+    tense: {
+      // D Phrygian subset (D Eb F G A) in ottava bassa
+      notes: [146.83, 155.56, 174.61, 196.00, 220.00], // D3, Eb3, F3, G3, A3
+      matrix: [
+        [0.10, 0.35, 0.20, 0.15, 0.20],
+        [0.40, 0.05, 0.30, 0.15, 0.10],
+        [0.25, 0.25, 0.10, 0.20, 0.20],
+        [0.20, 0.20, 0.15, 0.10, 0.35],
+        [0.25, 0.15, 0.20, 0.30, 0.10],
+      ],
+      intervalMs: () => 11000 + Math.random() * 7000, // 11-18s
+      probability: 0.30,
+      oscType: 'sawtooth',
+      adsr: { a: 2.5, d: 0.4, s: 0.5, r: 3.5 },
+      gain: 0.09,
+      fm: null,
+    },
+  };
+
+  let arpTimer = null;
+  let arpLastNoteIdx = null;
+
+  function pickNextNote(matrix, lastIdx) {
+    if (lastIdx === null) return Math.floor(Math.random() * matrix.length);
+    const row = matrix[lastIdx];
+    const r = Math.random();
+    let acc = 0;
+    for (let i = 0; i < row.length; i++) {
+      acc += row[i];
+      if (r <= acc) return i;
+    }
+    return row.length - 1;
+  }
+
+  function playArpNote(cfg, noteIdx) {
+    const now = AC.currentTime;
+    const freq = cfg.notes[noteIdx];
+    const { a, d, s, r } = cfg.adsr;
+    const total = a + d + r + 0.1;
+
+    const osc = AC.createOscillator();
+    osc.type = cfg.oscType;
+    osc.frequency.value = freq;
+
+    // opzionale FM modulator (per luminous bell)
+    if (cfg.fm) {
+      const mod = AC.createOscillator();
+      const modGain = AC.createGain();
+      mod.frequency.value = freq * cfg.fm.ratio;
+      modGain.gain.value = cfg.fm.depth;
+      mod.connect(modGain).connect(osc.frequency);
+      mod.start(now);
+      mod.stop(now + total);
+    }
+
+    const env = AC.createGain();
+    env.gain.setValueAtTime(0, now);
+    env.gain.linearRampToValueAtTime(cfg.gain, now + a);
+    env.gain.linearRampToValueAtTime(cfg.gain * s, now + a + d);
+    env.gain.linearRampToValueAtTime(0.0001, now + a + d + r);
+
+    // delay stereo leggero (L=375ms R=380ms)
+    const delayL = AC.createDelay();
+    delayL.delayTime.value = 0.375;
+    const delayR = AC.createDelay();
+    delayR.delayTime.value = 0.380;
+    const fbL = AC.createGain(); fbL.gain.value = 0.35;
+    const fbR = AC.createGain(); fbR.gain.value = 0.35;
+    delayL.connect(fbL).connect(delayL);
+    delayR.connect(fbR).connect(delayR);
+
+    const dry = AC.createGain(); dry.gain.value = 0.7;
+    const wet = AC.createGain(); wet.gain.value = 0.3;
+
+    osc.connect(env);
+    env.connect(dry).connect(master);
+    env.connect(delayL).connect(wet).connect(reverbSend);
+    env.connect(delayR).connect(wet); // stesso send
+
+    osc.start(now);
+    osc.stop(now + total);
+  }
+
+  function arpTick() {
+    if (!running || !currentMood) { arpTimer = null; return; }
+    const cfg = ARP_CONFIG[currentMood];
+    if (cfg && Math.random() < cfg.probability) {
+      const idx = pickNextNote(cfg.matrix, arpLastNoteIdx);
+      playArpNote(cfg, idx);
+      arpLastNoteIdx = idx;
+    }
+    arpTimer = setTimeout(arpTick, cfg.intervalMs());
+  }
+
+  function startArpeggiator() {
+    if (arpTimer) return;
+    arpTimer = setTimeout(arpTick, 3000); // breve delay iniziale
+  }
+
+  function stopArpeggiator() {
+    if (arpTimer) { clearTimeout(arpTimer); arpTimer = null; }
+    arpLastNoteIdx = null;
+  }
+
   // ---------- StateController ----------
   // Orchestratore dei mood. setMood(name) crossfada tra mood in CROSSFADE_S.
   const CROSSFADE_S = 3.5;
@@ -190,6 +332,7 @@
     gIn.linearRampToValueAtTime(1.0, now + CROSSFADE_S);
 
     currentMood = name;
+    arpLastNoteIdx = null; // cambia scala, matrice riparte pulita
   }
 
   // ---------- ScrollObserver ----------
@@ -316,11 +459,13 @@
     fadeMasterTo(MASTER_TARGET, FADE_IN);
     if (!currentMood) setMood('melancholic');
     startObserver();
+    startArpeggiator();
   }
 
   function stop() {
     if (!AC || !master) return;
     running = false;
+    stopArpeggiator();
     fadeMasterTo(0, FADE_OUT);
   }
 
