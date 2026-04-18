@@ -2,35 +2,58 @@
 
 Sito vetrina dell'agenzia Synapse Lab — digital craft studio di Milano.
 
-**Produzione:** https://federico-cyber.github.io/synapse-lab/
+**Produzione:** https://federico-cyber.github.io/synapse-lab/ (IT) · https://federico-cyber.github.io/synapse-lab/en/ (EN)
 
 ## Stack
 
-- HTML5 + CSS3 statico
-- React 18 via CDN + Babel standalone (design prototype — migrazione a Vite pianificata in piano separato)
-- Canvas 2D per la rete neurale di background
-- Zero dipendenze npm
+- **Vite 5** — bundler + dev server con HMR
+- **React 18** (bundled, non più CDN)
+- **Puppeteer 23** — snapshot prerender IT + EN
+- **Vanilla JS** in `src/vanilla/` per cursore custom, rete neurale canvas, audio ambient
+- **GitHub Pages** + GitHub Actions per hosting e CI
+
+## Prima installazione
+
+Serve **Node 20+** (verifica con `node --version`). Se non ce l'hai, installa da https://nodejs.org (LTS).
+
+```bash
+cd synapse-lab
+npm install    # scarica deps + Chromium per Puppeteer (~170 MB, una tantum)
+```
 
 ## Sviluppo locale
 
 ```bash
-python3 -m http.server 8787
-# apri http://localhost:8787
+npm run dev
+# apri http://localhost:5173/synapse-lab/
+# Edit src/**.jsx → salvi → browser ricarica automaticamente (HMR)
 ```
 
-## SEO
-
-Meta tag, JSON-LD, `robots.txt`, `sitemap.xml`, `favicon.svg` e `og-image.png` sono curati manualmente. Prima di ogni deploy:
+## Build e preview locale
 
 ```bash
-./scripts/seo-check.sh
+npm run build      # compila src/ in dist/
+npm run snapshot   # Puppeteer pre-renderizza dist/index.html (IT) + dist/en/index.html (EN)
+npm run preview    # serve dist/ su localhost:4173 (identico a produzione)
 ```
 
-Lo script verifica 17 tag critici e la validità di sitemap XML + JSON-LD. Exit non-zero se qualcosa manca.
+## SEO validation
 
-### Rigenerazione OG image
+```bash
+npm run seo-check
+```
 
-`og-image.html` è il sorgente. Per rigenerare la PNG:
+Valida 20 tag critici + presenza dei 7 chapter prerenderizzati + snapshot EN.
+
+Online dopo deploy:
+- Rich Results: https://search.google.com/test/rich-results
+- Schema.org: https://validator.schema.org/
+- OG preview: https://www.opengraph.xyz/
+- PageSpeed: https://pagespeed.web.dev/
+
+## Rigenerazione OG image
+
+Se cambi il template (`scripts/og-image.html`):
 
 ```bash
 "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
@@ -38,24 +61,63 @@ Lo script verifica 17 tag critici e la validità di sitemap XML + JSON-LD. Exit 
   --window-size=1200,800 --force-device-scale-factor=1 \
   --virtual-time-budget=8000 \
   --screenshot="$(pwd)/og-image-raw.png" \
-  "file://$(pwd)/og-image.html"
+  "file://$(pwd)/scripts/og-image.html"
 
 python3 -c "
 from PIL import Image
-Image.open('og-image-raw.png').crop((0, 0, 1200, 630)).save('og-image.png', optimize=True)
+Image.open('og-image-raw.png').crop((0, 0, 1200, 630)).save('public/og-image.png', optimize=True)
 "
 rm og-image-raw.png
 ```
 
-Nota: il render avviene a 1200×800 e si fa top-crop a 1200×630 con Pillow per aggirare un bug di Chrome headless quando viewport == body.
+Poi `npm run build` per propagarla in `dist/`.
 
-### Validazione online (dopo deploy)
+## Struttura
 
-- Rich results: https://search.google.com/test/rich-results
-- Schema.org validator: https://validator.schema.org/
-- OG preview: https://www.opengraph.xyz/
-- PageSpeed: https://pagespeed.web.dev/
+```
+synapse-lab/
+├── src/
+│   ├── main.jsx                 entry (hydrateRoot / createRoot)
+│   ├── app.jsx                  root component
+│   ├── chapters.jsx             i 7 chapter
+│   ├── tweaks.jsx               pannello Tweaks
+│   ├── tweaks-bootstrap.js      inizializza window.TWEAKS
+│   ├── copy.js                  dizionario stringhe IT/EN
+│   ├── style.css
+│   └── vanilla/
+│       ├── cursor.js            cursore custom
+│       ├── neural.js            canvas rete neurale
+│       ├── lang.js              swap stringhe statiche IT/EN
+│       └── sound.js             audio ambient
+├── public/                      asset statici copiati as-is in dist/
+│   ├── favicon.svg
+│   ├── og-image.png
+│   ├── robots.txt
+│   └── sitemap.xml
+├── scripts/
+│   ├── snapshot.mjs             Puppeteer prerender
+│   ├── seo-check.sh             smoke test
+│   └── og-image.html            sorgente per OG image
+├── dist/                        (gitignored) output Vite + snapshot
+├── index.html                   shell statico (Vite entry template)
+├── package.json
+└── vite.config.js
+```
 
 ## Deploy
 
-GitHub Actions → GitHub Pages. Push della branch `main` → online in ~1 minuto. Il workflow (`.github/workflows/deploy-pages.yml`) deploya il contenuto di `./synapse-lab` come root del sito.
+Automatico su push a `main`. Il workflow `.github/workflows/deploy-pages.yml`:
+1. `npm ci` in `./synapse-lab`
+2. `npm run build` (Vite)
+3. `npm run snapshot` (Puppeteer)
+4. `npm run seo-check`
+5. Upload `./synapse-lab/dist` → GitHub Pages
+
+Durata tipica: 2-3 minuti (Puppeteer scarica Chromium la prima volta).
+
+## Troubleshooting
+
+- **`npm install` lento o fallisce su Puppeteer:** è Chromium che scarica (170 MB). Se timeout, ripeti. Se non vuole, `npx puppeteer browsers install chrome`.
+- **`npm run dev` pagina bianca:** controlla DevTools console — probabile import con path sbagliato (`Failed to resolve`).
+- **`npm run snapshot` timeout:** aumenta `timeout: 30000` → `60000` in `scripts/snapshot.mjs`.
+- **Regressione dopo refactor:** `git checkout main && npm install && npm run dev` torna allo stato Piano A.
