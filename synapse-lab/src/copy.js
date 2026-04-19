@@ -142,7 +142,7 @@ export const COPY = {
       en: "I've been designing and building sites since the web was ugly. Synapse Lab is my attempt to do it the way I think it should be done: few projects, done well, with care. No team of twenty-three. No deck-shaped roadmap. Just the work, and the time to do it."
     },
     contacts: [
-      { label: "Email",  href: "mailto:battistella.business@gmail.com", text: "battistella.business@gmail.com" },
+      { label: "Email", obfuscated: true, labelIt: "Invia una mail", labelEn: "Send a mail" },
       { label: "X",      href: "#", text: "@battistella" },
       { label: "GitHub", href: "#", text: "/battistella" },
       { label: "LinkedIn", href: "#", text: "/in/battistella" },
@@ -161,15 +161,10 @@ export const COPY = {
                 en: "30 minutes. No pre-prepared brief. Tell me what's on your mind." },
         action: { it: "Apri Calendly", en: "Open Calendly" } },
       { tag: { it: "Email diretta", en: "Direct email" },
-        email: "battistella.business@gmail.com",
+        title: { it: "Scrivimi una <em>mail</em>", en: "Drop me a <em>line</em>" },
         desc: { it: "Risposta entro 48h, sempre. Anche per dire di no.",
                 en: "Reply within 48h, always. Even to say no." },
         action: { it: "Copia indirizzo", en: "Copy address" } },
-      { tag: { it: "Preferisci scrivere?", en: "Prefer to type?" },
-        title: { it: "Form <em>conversazionale</em>", en: "Conversational <em>form</em>" },
-        desc: { it: "Tre domande, una alla volta. Senza tendine, senza checkbox.",
-                en: "Three questions, one at a time. No dropdowns, no checkboxes." },
-        action: { it: "Inizia la conversazione", en: "Start the conversation" } },
     ],
     footer: {
       joke: {
