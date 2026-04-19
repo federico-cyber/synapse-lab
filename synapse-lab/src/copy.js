@@ -174,21 +174,6 @@ export const COPY = {
       ],
     },
   },
-  about: {
-    label: { it: "Capitolo 06 · Studio", en: "Chapter 06 · Studio" },
-    name: { it: "<em>Federico Battistella.</em>", en: "<em>Federico Battistella.</em>" },
-    role: { it: "Fondatore & Principal", en: "Founder & Principal" },
-    bio: {
-      it: "Progetto e costruisco siti da quando il web era brutto. Synapse Lab è il mio tentativo di farlo come credo si debba fare: pochi progetti, fatti bene, con cura. Nessun team di ventitré persone. Nessuna roadmap di deck. Solo il lavoro, e il tempo per farlo.",
-      en: "I've been designing and building sites since the web was ugly. Synapse Lab is my attempt to do it the way I think it should be done: few projects, done well, with care. No team of twenty-three. No deck-shaped roadmap. Just the work, and the time to do it."
-    },
-    contacts: [
-      { label: "Email",  href: "mailto:battistella.business@gmail.com", text: "battistella.business@gmail.com" },
-      { label: "X",      href: "#", text: "@battistella" },
-      { label: "GitHub", href: "#", text: "/battistella" },
-      { label: "LinkedIn", href: "#", text: "/in/battistella" },
-    ]
-  },
   contact: {
     label: { it: "Capitolo 07 · Contatti", en: "Chapter 07 · Contact" },
     title: {
