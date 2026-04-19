@@ -386,7 +386,7 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
             <a href="https://github.com/federico-cyber" rel="me noopener" target="_blank">GitHub</a>
             <button className="footer-email-btn" type="button" onClick={mailAndCopy} aria-label={lang === 'en' ? 'Send me an email' : 'Inviami una mail'}>
               Email
-              {footerCopied && <span className="footer-toast" role="status">{lang === 'en' ? 'copied' : 'copiato'}</span>}
+              {footerCopied && <span className="footer-toast" aria-hidden="true">{lang === 'en' ? 'copied' : 'copiato'}</span>}
               <span className="sr-only" aria-live="polite" aria-atomic="true">
                 {footerCopied ? (lang === 'en' ? 'Email copied' : 'Email copiata') : ''}
               </span>
