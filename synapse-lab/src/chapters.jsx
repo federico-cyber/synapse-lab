@@ -278,51 +278,44 @@ function ChapterStack({ lang }) {
   );
 }
 
-/* ------------------- Ch6 — About ------------------- */
-function ChapterAbout({ lang }) {
-  const C = COPY.about;
-  const [aboutCopied, setAboutCopied] = useState(false);
+/* ------------------- Ch6 — Studio ------------------- */
+function ChapterStudio({ lang }) {
+  const C = COPY.studio;
 
-  const mailAndCopyAbout = async () => {
-    const ok = await copyEmailToClipboard();
-    openMailto();
-    if (!ok) return;
-    setAboutCopied(true);
-    setTimeout(() => setAboutCopied(false), 1600);
-  };
+  const Block = ({ block, negRight }) => (
+    <div className="studio-block reveal">
+      <h3 className="studio-block-title">{L(block.heading.it, block.heading.en)}</h3>
+      <div className="studio-grid">
+        <div className="studio-col">
+          <span className="studio-col-label">{L(block.leftLabel.it, block.leftLabel.en)}</span>
+          <ul>
+            {block.left.map((x, i) => <li key={i}>{L(x.it, x.en)}</li>)}
+          </ul>
+        </div>
+        <div className={`studio-col${negRight ? ' studio-col--neg' : ''}`}>
+          <span className="studio-col-label">{L(block.rightLabel.it, block.rightLabel.en)}</span>
+          <ul>
+            {block.right.map((x, i) => <li key={i}>{L(x.it, x.en)}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
-    <section id="ch6" className="chapter" data-screen-label="06 About">
+    <section id="ch6" className="chapter" data-screen-label="06 Studio">
       <div className="chapter-meta reveal">
         <span className="chapter-num">06</span><span className="dot"/>
         <span>{L(C.label.it, C.label.en)}</span>
       </div>
-      <div className="about-wrap">
-        <div className="reveal">
-          <span className="about-role">{L(C.role.it, C.role.en)}</span>
-          <h2 className="about-name" dangerouslySetInnerHTML={rawHtml(L(C.name.it, C.name.en))}/>
-        </div>
-        <p className="about-bio reveal">{L(C.bio.it, C.bio.en)}</p>
-        <div className="about-sign reveal">F. Battistella</div>
-        <div className="about-contacts reveal">
-          {C.contacts.map((c, i) => (
-            <div key={i}>
-              <span style={{ color: 'var(--ink-faint)' }}>{c.label} &nbsp;</span>
-              {c.obfuscated ? (
-                <button className="about-email-btn" type="button" onClick={mailAndCopyAbout} data-magnet>
-                  {L(c.cta.it, c.cta.en)}
-                  {aboutCopied && <span className="about-toast" aria-hidden="true">{lang === 'en' ? 'copied' : 'copiato'}</span>}
-                  <span className="sr-only" aria-live="polite" aria-atomic="true">
-                    {aboutCopied ? (lang === 'en' ? 'Email copied' : 'Email copiata') : ''}
-                  </span>
-                </button>
-              ) : (
-                <a href={c.href} data-magnet>{c.text}</a>
-              )}
-            </div>
-          ))}
-        </div>
+
+      <div className="studio-head">
+        <h2 className="studio-title reveal" dangerouslySetInnerHTML={rawHtml(L(C.title.it, C.title.en))} />
+        <p className="studio-lead reveal">{L(C.lead.it, C.lead.en)}</p>
       </div>
+
+      <Block block={C.b1} negRight />
+      <Block block={C.b2} />
     </section>
   );
 }
@@ -420,6 +413,7 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
             <span className="moon"/>
           </button>
           <span className="footer-joke">{L(C.footer.joke.it, C.footer.joke.en)}</span>
+          <span className="footer-credit">{L(C.footer.credit.it, C.footer.credit.en)}</span>
           <span>© 2026 · SYNAPSE LAB</span>
         </div>
       </footer>
@@ -430,5 +424,5 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
 /* Export all chapters */
 export {
   ChapterHero, ChapterManifesto, ChapterServices, ChapterProcess,
-  ChapterStack, ChapterAbout, ChapterContact
+  ChapterStack, ChapterStudio, ChapterContact
 };
