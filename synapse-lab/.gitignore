@@ -15,3 +15,6 @@ dist/
 
 # Puppeteer local cache (se eventualmente creata fuori node_modules)
 .cache/
+
+# Git worktrees
+.worktrees/
