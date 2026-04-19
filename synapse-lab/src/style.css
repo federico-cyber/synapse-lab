@@ -776,7 +776,7 @@ section.chapter {
 .contact-title em { font-family: var(--serif); font-style: italic; color: var(--accent); }
 
 .contact-grid {
-  display: grid; grid-template-columns: 1.2fr 1fr 1fr;
+  display: grid; grid-template-columns: 1fr 1fr;
   gap: 16px;
   margin-bottom: 64px;
 }
@@ -810,12 +810,6 @@ section.chapter {
 .contact-card .action .arr { transition: transform var(--dur-micro); }
 .contact-card:hover .action .arr { transform: translateX(6px); color: var(--accent); }
 
-.contact-email-card .email {
-  font-family: var(--serif); font-style: italic;
-  font-size: clamp(18px, 1.8vw, 24px);
-  color: var(--ink);
-  word-break: break-all;
-}
 .copy-state { font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--accent); opacity: 0; transition: opacity .2s; }
 .contact-email-card.copied .copy-state { opacity: 1; }
 
