@@ -110,7 +110,7 @@ Sostituisci esattamente questa riga:
 Con:
 
 ```js
-      { label: "Email", obfuscated: true, labelIt: "Invia una mail", labelEn: "Send a mail" },
+      { label: "Email", obfuscated: true, cta: { it: "Invia una mail", en: "Send a mail" } },
 ```
 
 Gli altri elementi dell'array `contacts` (X, GitHub, LinkedIn) restano invariati.
@@ -617,7 +617,7 @@ Sostituisci con:
               <span style={{ color: 'var(--ink-faint)' }}>{c.label} &nbsp;</span>
               {c.obfuscated ? (
                 <button className="about-email-btn" type="button" onClick={mailAndCopyAbout} data-magnet>
-                  {lang === 'en' ? c.labelEn : c.labelIt}
+                  {L(c.cta.it, c.cta.en)}
                   {aboutCopied && <span className="about-toast" role="status">{lang === 'en' ? 'copied' : 'copiato'}</span>}
                 </button>
               ) : (

@@ -142,7 +142,7 @@ export const COPY = {
       en: "I've been designing and building sites since the web was ugly. Synapse Lab is my attempt to do it the way I think it should be done: few projects, done well, with care. No team of twenty-three. No deck-shaped roadmap. Just the work, and the time to do it."
     },
     contacts: [
-      { label: "Email", obfuscated: true, labelIt: "Invia una mail", labelEn: "Send a mail" },
+      { label: "Email", obfuscated: true, cta: { it: "Invia una mail", en: "Send a mail" } },
       { label: "X",      href: "#", text: "@battistella" },
       { label: "GitHub", href: "#", text: "/battistella" },
       { label: "LinkedIn", href: "#", text: "/in/battistella" },
