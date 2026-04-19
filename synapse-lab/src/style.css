@@ -902,6 +902,12 @@ section.chapter {
 .footer .socials a { color: var(--ink-dim); transition: color var(--dur-micro); }
 .footer .socials a:hover { color: var(--accent); }
 .footer-joke { color: var(--ink-faint); font-style: italic; font-family: var(--serif); text-transform: none; letter-spacing: 0; font-size: 14px; }
+.footer-credit {
+  color: var(--ink-faint);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  font-family: var(--mono);
+}
 
 /* theme toggle in footer */
 .theme-toggle {
