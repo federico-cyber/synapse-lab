@@ -399,6 +399,7 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
             <span className="moon"/>
           </button>
           <span className="footer-joke">{L(C.footer.joke.it, C.footer.joke.en)}</span>
+          <span className="footer-credit">{L(C.footer.credit.it, C.footer.credit.en)}</span>
           <span>© 2026 · SYNAPSE LAB</span>
         </div>
       </footer>
