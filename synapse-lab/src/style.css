@@ -696,7 +696,7 @@ section.chapter {
   letter-spacing: -0.02em;
 }
 .studio-lead {
-  color: var(--ink-dim);
+  color: var(--ink-faint);
   max-width: 56ch;
   margin-top: 18px;
 }
@@ -704,10 +704,10 @@ section.chapter {
 .studio-block { margin-top: clamp(48px, 6vw, 88px); }
 .studio-block-title {
   font-family: var(--mono);
-  font-size: clamp(12px, 1vw, 14px);
-  letter-spacing: 0.14em;
+  font-size: clamp(14px, 1.1vw, 16px);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-dim);
+  color: var(--ink-faint);
   margin-bottom: 24px;
 }
 
@@ -953,7 +953,7 @@ body[data-wireframe="true"] * {
 }
 body[data-wireframe="true"] .hero-title, body[data-wireframe="true"] .svc-title,
 body[data-wireframe="true"] .contact-title, body[data-wireframe="true"] .services-title, body[data-wireframe="true"] .process-title,
-body[data-wireframe="true"] .stack-title {
+body[data-wireframe="true"] .stack-title, body[data-wireframe="true"] .studio-title {
   text-transform: uppercase;
   letter-spacing: .04em !important;
 }
