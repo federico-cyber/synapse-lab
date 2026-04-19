@@ -85,6 +85,13 @@ async function snapshot({ url, outFile, langOverride }) {
 
   await new Promise((r) => setTimeout(r, 800));
 
+  // Svuota il Portal di TWEAKS: viene rigenerato da React al load.
+  // Se lasciato nello snapshot, hydrate crea un secondo pulsante accanto.
+  await page.evaluate(() => {
+    const m = document.getElementById('tweaks-mount');
+    if (m) m.replaceChildren();
+  });
+
   const html = await page.content();
 
   await mkdir(dirname(outFile), { recursive: true });

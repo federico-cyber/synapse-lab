@@ -122,6 +122,21 @@ function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Nascondi rail laterale quando ch7 (Contact+footer) è in viewport,
+  // altrimenti si sovrappone al footer che ripete le stesse coordinate.
+  useEffect(() => {
+    const ch7 = document.getElementById('ch7');
+    if (!ch7) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        document.body.setAttribute('data-at-end', entry.isIntersecting ? 'true' : 'false');
+      },
+      { threshold: 0, rootMargin: '0px 0px -20% 0px' }
+    );
+    io.observe(ch7);
+    return () => io.disconnect();
+  }, []);
+
   // Clock
   useEffect(() => {
     const tick = () => {

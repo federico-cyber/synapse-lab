@@ -286,7 +286,9 @@ body[data-sound="on"] #sound-toggle .sound-state::before { content: ""; }
   color: var(--ink-dim);
   display: flex; gap: 32px; align-items: flex-end;
   pointer-events: none;
+  transition: opacity .3s var(--ease-micro);
 }
+body[data-at-end="true"] #rail { opacity: 0; }
 .rail-block { display: flex; flex-direction: column; gap: 6px; }
 .rail-label { text-transform: uppercase; }
 .rail-bar {
