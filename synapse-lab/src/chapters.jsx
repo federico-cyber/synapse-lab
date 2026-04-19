@@ -6,6 +6,8 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { COPY } from './copy.js';
+import { CALENDLY_URL } from './config.js';
+import { copyEmailToClipboard, openMailto } from './email-obfuscate.js';
 
 const L = (it, en) => (window.__lang === 'en' ? en : it);
 
@@ -309,11 +311,23 @@ function ChapterAbout({ lang }) {
 function ChapterContact({ lang, onToggleTheme, theme }) {
   const C = COPY.contact;
   const [copied, setCopied] = useState(false);
-  const copyEmail = () => {
-    const email = C.cards[1].email;
-    if (navigator.clipboard) navigator.clipboard.writeText(email);
+  const [footerCopied, setFooterCopied] = useState(false);
+
+  const copyEmail = async () => {
+    await copyEmailToClipboard();
     setCopied(true);
     setTimeout(() => setCopied(false), 1600);
+  };
+
+  const openCall = () => {
+    window.open(CALENDLY_URL, '_blank', 'noopener,noreferrer');
+  };
+
+  const mailAndCopy = async () => {
+    await copyEmailToClipboard();
+    openMailto();
+    setFooterCopied(true);
+    setTimeout(() => setFooterCopied(false), 1600);
   };
 
   return (
@@ -325,7 +339,7 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
       <h2 className="contact-title reveal" dangerouslySetInnerHTML={rawHtml(L(C.title.it, C.title.en))} />
 
       <div className="contact-grid">
-        <button className="contact-card reveal" data-magnet>
+        <button className="contact-card reveal" data-magnet onClick={openCall}>
           <div>
             <span className="tag">{L(C.cards[0].tag.it, C.cards[0].tag.en)}</span>
             <span className="title" role="heading" aria-level="3" style={{ marginTop: 16 }} dangerouslySetInnerHTML={rawHtml(L(C.cards[0].title.it, C.cards[0].title.en))}/>
