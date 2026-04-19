@@ -356,12 +356,12 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
         <button className={`contact-card contact-email-card reveal ${copied ? 'copied' : ''}`} data-magnet onClick={copyEmail}>
           <div>
             <span className="tag">{L(C.cards[1].tag.it, C.cards[1].tag.en)}</span>
-            <p className="email" style={{ marginTop: 20 }}>{C.cards[1].email}</p>
+            <span className="title" role="heading" aria-level="3" style={{ marginTop: 16 }} dangerouslySetInnerHTML={rawHtml(L(C.cards[1].title.it, C.cards[1].title.en))}/>
             <p className="desc" style={{ marginTop: 14 }}>{L(C.cards[1].desc.it, C.cards[1].desc.en)}</p>
           </div>
           <div className="action">
             <span>{copied ? (lang === 'en' ? 'Copied' : 'Copiato') : L(C.cards[1].action.it, C.cards[1].action.en)}</span>
-            <span className="copy-state">✓</span>
+            <span className="copy-state" aria-live="polite">✓</span>
           </div>
         </button>
 
