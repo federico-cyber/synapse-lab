@@ -281,6 +281,16 @@ function ChapterStack({ lang }) {
 /* ------------------- Ch6 — About ------------------- */
 function ChapterAbout({ lang }) {
   const C = COPY.about;
+  const [aboutCopied, setAboutCopied] = useState(false);
+
+  const mailAndCopyAbout = async () => {
+    const ok = await copyEmailToClipboard();
+    openMailto();
+    if (!ok) return;
+    setAboutCopied(true);
+    setTimeout(() => setAboutCopied(false), 1600);
+  };
+
   return (
     <section id="ch6" className="chapter" data-screen-label="06 About">
       <div className="chapter-meta reveal">
@@ -298,7 +308,17 @@ function ChapterAbout({ lang }) {
           {C.contacts.map((c, i) => (
             <div key={i}>
               <span style={{ color: 'var(--ink-faint)' }}>{c.label} &nbsp;</span>
-              <a href={c.href} data-magnet>{c.text}</a>
+              {c.obfuscated ? (
+                <button className="about-email-btn" type="button" onClick={mailAndCopyAbout} data-magnet>
+                  {L(c.cta.it, c.cta.en)}
+                  {aboutCopied && <span className="about-toast" aria-hidden="true">{lang === 'en' ? 'copied' : 'copiato'}</span>}
+                  <span className="sr-only" aria-live="polite" aria-atomic="true">
+                    {aboutCopied ? (lang === 'en' ? 'Email copied' : 'Email copiata') : ''}
+                  </span>
+                </button>
+              ) : (
+                <a href={c.href} data-magnet>{c.text}</a>
+              )}
             </div>
           ))}
         </div>
