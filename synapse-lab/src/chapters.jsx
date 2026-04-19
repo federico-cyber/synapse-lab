@@ -314,7 +314,8 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
   const [footerCopied, setFooterCopied] = useState(false);
 
   const copyEmail = async () => {
-    await copyEmailToClipboard();
+    const ok = await copyEmailToClipboard();
+    if (!ok) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 1600);
   };
@@ -324,8 +325,9 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
   };
 
   const mailAndCopy = async () => {
-    await copyEmailToClipboard();
+    const ok = await copyEmailToClipboard();
     openMailto();
+    if (!ok) return;
     setFooterCopied(true);
     setTimeout(() => setFooterCopied(false), 1600);
   };
