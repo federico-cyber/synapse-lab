@@ -216,6 +216,10 @@ export const COPY = {
       joke: {
         it: "// built with care in Milano, Italy — and just enough espresso",
         en: "// built with care in Milano, Italy — and just enough espresso"
+      },
+      credit: {
+        it: "Studio fondato da Federico Battistella · Milano, IT",
+        en: "Studio founded by Federico Battistella · Milano, IT"
       }
     }
   }
