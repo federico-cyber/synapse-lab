@@ -361,7 +361,10 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
           </div>
           <div className="action">
             <span>{copied ? (lang === 'en' ? 'Copied' : 'Copiato') : L(C.cards[1].action.it, C.cards[1].action.en)}</span>
-            <span className="copy-state" aria-live="polite">✓</span>
+            <span className="copy-state">✓</span>
+            <span className="sr-only" aria-live="polite" aria-atomic="true">
+              {copied ? (lang === 'en' ? 'Email copied' : 'Email copiata') : ''}
+            </span>
           </div>
         </button>
 
