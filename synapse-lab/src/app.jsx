@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import {
   ChapterHero, ChapterManifesto, ChapterServices, ChapterProcess,
-  ChapterStack, ChapterAbout, ChapterContact
+  ChapterStack, ChapterStudio, ChapterContact
 } from './chapters.jsx';
 import { TweaksMount } from './tweaks.jsx';
 
@@ -169,7 +169,7 @@ function App() {
       <ChapterServices lang={lang} tweaks={tweaks} />
       <ChapterProcess lang={lang} tweaks={tweaks} />
       <ChapterStack lang={lang} tweaks={tweaks} />
-      <ChapterAbout lang={lang} tweaks={tweaks} />
+      <ChapterStudio lang={lang} tweaks={tweaks} />
       <ChapterContact lang={lang} tweaks={tweaks} theme={tweaks.theme}
         onToggleTheme={() => updateTweaks({ theme: tweaks.theme === 'light' ? 'dark' : 'light' })}/>
       <TweaksPortal lang={lang} state={tweaks} onChange={updateTweaks}/>
