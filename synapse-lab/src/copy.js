@@ -133,6 +133,47 @@ export const COPY = {
       { name: "Claude Code", cat: "AI",        why: { it: "Pair programmer, non sostituto.", en: "Pair programmer, not replacement." } },
     ]
   },
+  studio: {
+    label: { it: "Capitolo 06 · Studio", en: "Chapter 06 · Studio" },
+    title: {
+      it: "Due cose: <em>come siamo fatti</em>, e a quali condizioni lavoriamo.",
+      en: "Two things: <em>who we are</em>, and the terms we work on."
+    },
+    lead: {
+      it: "Senza giri di parole, così sai cosa aspettarti.",
+      en: "No fluff — so you know what to expect."
+    },
+    b1: {
+      heading: { it: "Lo studio", en: "The studio" },
+      leftLabel:  { it: "Facciamo",     en: "We do" },
+      rightLabel: { it: "Non facciamo", en: "We don't" },
+      left: [
+        { it: "Un progetto per volta",             en: "One project at a time" },
+        { it: "Progetti cuciti addosso",           en: "Projects cut to measure" },
+        { it: "Prezzo fisso, deciso prima",        en: "Fixed price, agreed upfront" },
+      ],
+      right: [
+        { it: "Tre brief nella stessa settimana",  en: "Three briefs in one week" },
+        { it: "Template comprati e ri-verniciati", en: "Bought templates with a new coat of paint" },
+        { it: "Fatturazione a ore che si gonfia",  en: "Hourly bills that keep growing" },
+      ],
+    },
+    b2: {
+      heading: { it: "Il patto", en: "The deal" },
+      leftLabel:  { it: "Portiamo noi", en: "We bring" },
+      rightLabel: { it: "Porti tu",     en: "You bring" },
+      left: [
+        { it: "Design e codice, un solo referente", en: "Design and code, a single point of contact" },
+        { it: "Risposta entro 48h, sempre",         en: "Reply within 48h, always" },
+        { it: "Un sito che ti sopravvive",          en: "A site that outlives us" },
+      ],
+      right: [
+        { it: "Tempo per decisioni e revisioni",    en: "Time for decisions and reviews" },
+        { it: "Feedback chiaro, anche quando non ti piace", en: "Clear feedback, even when it stings" },
+        { it: "Fiducia nel processo",               en: "Trust in the process" },
+      ],
+    },
+  },
   about: {
     label: { it: "Capitolo 06 · Studio", en: "Chapter 06 · Studio" },
     name: { it: "<em>Federico Battistella.</em>", en: "<em>Federico Battistella.</em>" },
