@@ -384,7 +384,13 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
           </div>
           <div className="fl-col socials" style={{ alignSelf: 'flex-end' }}>
             <a href="https://github.com/federico-cyber" rel="me noopener" target="_blank">GitHub</a>
-            <a href="mailto:battistella.business@gmail.com" rel="me">Email</a>
+            <button className="footer-email-btn" type="button" onClick={mailAndCopy} aria-label={lang === 'en' ? 'Send me an email' : 'Inviami una mail'}>
+              Email
+              {footerCopied && <span className="footer-toast" role="status">{lang === 'en' ? 'copied' : 'copiato'}</span>}
+              <span className="sr-only" aria-live="polite" aria-atomic="true">
+                {footerCopied ? (lang === 'en' ? 'Email copied' : 'Email copiata') : ''}
+              </span>
+            </button>
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-end' }}>
