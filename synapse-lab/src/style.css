@@ -767,70 +767,6 @@ section.chapter {
 }
 
 /* ============================================================
-   CH6 — ABOUT (Federico)
-   ============================================================ */
-#ch6 { background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg-0) 80%, #000 20%)); }
-.about-wrap {
-  max-width: 900px; margin: 0 auto;
-  display: flex; flex-direction: column; gap: 56px;
-  align-items: flex-start;
-}
-.about-portrait {
-  width: 220px; height: 280px;
-  border-radius: 2px;
-  background:
-    repeating-linear-gradient(100deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px),
-    linear-gradient(160deg, var(--bg-2), var(--bg-1));
-  border: 1px solid var(--line);
-  position: relative;
-  overflow: hidden;
-  filter: grayscale(.6) contrast(1.1);
-}
-.about-portrait::before {
-  content: "portrait / federico";
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
-  color: var(--ink-faint); text-transform: uppercase;
-}
-.about-portrait::after {
-  content: ""; position: absolute; inset: 0;
-  background: radial-gradient(400px at 30% 30%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%);
-  mix-blend-mode: screen;
-}
-.about-name {
-  font-family: var(--sans); font-weight: 400;
-  font-size: clamp(4rem, 11vw, 11rem);
-  line-height: .9; letter-spacing: -.03em;
-}
-.about-name em { font-family: var(--serif); font-style: italic; color: var(--accent); }
-.about-role {
-  font-family: var(--mono); font-size: 11px; letter-spacing: .18em;
-  color: var(--ink-dim); text-transform: uppercase;
-}
-.about-bio {
-  max-width: 600px; font-size: 19px; line-height: 1.5; color: var(--ink);
-  font-family: var(--serif); font-style: italic; font-weight: 400;
-}
-.about-sign {
-  font-family: var(--serif); font-style: italic;
-  font-size: 28px;
-  color: var(--accent);
-  transform: rotate(-4deg);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 10px;
-  width: fit-content;
-  letter-spacing: .04em;
-}
-.about-contacts {
-  display: flex; gap: 28px; flex-wrap: wrap;
-  font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
-  color: var(--ink-dim); text-transform: uppercase;
-}
-.about-contacts a { color: var(--ink-dim); border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color var(--dur-micro), border-color var(--dur-micro); }
-.about-contacts a:hover { color: var(--accent); border-color: var(--accent); }
-
-/* ============================================================
    CH7 — CONTACT
    ============================================================ */
 #ch7 { padding-bottom: 40px; }
@@ -1015,7 +951,7 @@ body[data-wireframe="true"] * {
   font-style: normal !important;
   letter-spacing: .02em !important;
 }
-body[data-wireframe="true"] .hero-title, body[data-wireframe="true"] .svc-title, body[data-wireframe="true"] .about-name,
+body[data-wireframe="true"] .hero-title, body[data-wireframe="true"] .svc-title,
 body[data-wireframe="true"] .contact-title, body[data-wireframe="true"] .services-title, body[data-wireframe="true"] .process-title,
 body[data-wireframe="true"] .stack-title {
   text-transform: uppercase;
