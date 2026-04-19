@@ -368,17 +368,6 @@ function ChapterContact({ lang, onToggleTheme, theme }) {
           </div>
         </button>
 
-        <button className="contact-card reveal" data-magnet>
-          <div>
-            <span className="tag">{L(C.cards[2].tag.it, C.cards[2].tag.en)}</span>
-            <span className="title" role="heading" aria-level="3" style={{ marginTop: 16 }} dangerouslySetInnerHTML={rawHtml(L(C.cards[2].title.it, C.cards[2].title.en))}/>
-            <p className="desc" style={{ marginTop: 14 }}>{L(C.cards[2].desc.it, C.cards[2].desc.en)}</p>
-          </div>
-          <div className="action">
-            <span>{L(C.cards[2].action.it, C.cards[2].action.en)}</span>
-            <span className="arr">↗</span>
-          </div>
-        </button>
       </div>
 
       <footer className="footer">
