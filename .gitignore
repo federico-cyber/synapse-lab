@@ -11,3 +11,7 @@ build/
 
 # Git worktrees
 .worktrees/
+
+# Progetto Eredi Scabini — ora in repo dedicato privato
+# https://github.com/federico-cyber/eredi-scabini
+eredi-scabini/
